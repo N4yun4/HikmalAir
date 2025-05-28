@@ -19,4 +19,8 @@ class PageController extends Controller
     public function seat(){
         return view('seat');
     }
+
+    public function makanan(){
+    return view('makanan');
+    }
 }

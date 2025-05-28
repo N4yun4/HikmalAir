@@ -9,3 +9,4 @@ Route::get('/register', [PageController::class, 'register']);
 Route::get('/seat', [PageController::class, 'seat']);
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/makanan', [PageController::class, 'makanan']);
