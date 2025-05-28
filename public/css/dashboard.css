@@ -1,0 +1,122 @@
+/* --- Hero Section --- */
+.hero-section {
+    position: relative;
+    color: #ffffff;
+    min-height: 400px;
+    padding-bottom: 0;
+    overflow: visible;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    filter: brightness(0.65);
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 3;
+}
+
+/* Panel Pencarian */
+.search-panel-hero {
+    background-color: #223354;
+    padding: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.75rem 1.5rem rgba(0,0,0,.3);
+    width: 90%;
+    max-width: 950px;
+    color: #ffffff;
+
+    /* --- posisi panel pencarian --- */
+    position: absolute;
+    bottom: -500px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+.search-panel-hero .panel-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.search-panel-hero .form-control-lg {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    border: 1px solid transparent;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    font-size: 0.95rem;
+}
+.search-panel-hero .form-control-lg:focus {
+    background-color: #ffffff;
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+.search-panel-hero .form-control-lg::placeholder {
+    color: #6c757d;
+}
+.search-panel-hero input[type="date"].form-control-lg {
+    color: #6c757d;
+}
+.search-panel-hero input[type="date"].form-control-lg:focus,
+.search-panel-hero input[type="date"].form-control-lg:valid {
+    color: #333;
+}
+.search-panel-hero .interchange-icon {
+    color: #ffffff !important;
+    align-self: center;
+    padding-bottom: 0.75rem;
+}
+.search-panel-hero .btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+}
+.search-panel-hero .btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+.search-panel-hero .return-trip-switch {
+    display: flex;
+    justify-content: flex-end;
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+}
+.search-panel-hero .return-trip-switch .form-check-input {
+    background-color: rgba(255,255,255,0.3);
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.search-panel-hero .return-trip-switch .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.search-panel-hero .return-trip-switch .form-check-label {
+    color: #f0f0f0;
+    font-size: 0.85rem;
+}
+
+.content-section {
+    padding: 3rem 0;
+    margin-top: 120px;
+}
+.content-section .card {
+    height: 100%;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+}
+.content-section .card-title {
+    font-weight: 600;
+}

@@ -1,0 +1,123 @@
+body {
+    padding-top: 115px;
+}
+
+/* === navbar utama style === */
+.main-navbar-custom {
+    background-color: #2c3e50;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1030;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.main-navbar-custom .navbar-brand img {
+    height: 30px;
+    width: auto;
+    transition: filter 0.3s ease-in-out;
+}
+.main-navbar-custom .navbar-brand .fw-bold {
+    color: #ffffff;
+    transition: color 0.3s ease-in-out;
+}
+.main-navbar-custom .navbar-brand div[style*="border-left"] {
+    border-left-color: #ffffff !important;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.main-navbar-custom .search-form-custom {
+    width: 100%;
+}
+@media (min-width: 992px) {
+    .main-navbar-custom .search-form-custom {
+        width: 50%;
+        max-width: 600px;
+    }
+}
+
+/* user dropdown */
+.main-navbar-custom .navbar-nav .nav-link {
+    color: #ffffff;
+    transition: color 0.3s ease-in-out;
+}
+.main-navbar-custom .navbar-nav .nav-link svg {
+    fill: #ffffff;
+    transition: fill 0.3s ease-in-out;
+}
+.main-navbar-custom .navbar-nav .dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 0.375rem;
+}
+.main-navbar-custom .navbar-nav .dropdown-item {
+    color: #212529;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+}
+.main-navbar-custom .navbar-nav .dropdown-item:hover,
+.main-navbar-custom .navbar-nav .dropdown-item:focus {
+    color: #1e2125;
+    background-color: #e9ecef;
+}
+.main-navbar-custom .navbar-nav .dropdown-divider {
+    border-top: 1px solid #dee2e6;
+}
+/* === navbar utama style end === */
+
+/* === navigation panel style === */
+.secondary-navbar-custom {
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    border-bottom: none !important;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 1029;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, top 0.3s ease-in-out;
+}
+.secondary-navbar-custom .nav-link {
+    color: #333;
+    transition: color 0.3s ease-in-out;
+}
+.secondary-navbar-custom .nav-link:hover {
+    color: #1e2125;
+}
+/* === navigation panel style end === */
+
+/* === navbar scrolled style === */
+/* navbar utama */
+body.navbar-scrolled .main-navbar-custom {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+body.navbar-scrolled .main-navbar-custom .navbar-brand .fw-bold,
+body.navbar-scrolled .main-navbar-custom .navbar-nav .nav-link {
+    color: #333 !important;
+}
+body.navbar-scrolled .main-navbar-custom .navbar-brand div[style*="border-left"] {
+    border-left-color: #333 !important;
+}
+body.navbar-scrolled .main-navbar-custom .navbar-brand img {
+    filter: brightness(0.3);
+}
+body.navbar-scrolled .main-navbar-custom .navbar-toggler .navbar-toggler-icon {
+
+    filter: invert(1) brightness(0.5) sepia(1) hue-rotate(180deg) saturate(5);
+}
+body.navbar-scrolled .main-navbar-custom .navbar-nav .nav-link svg {
+    fill: #333 !important;
+}
+
+/* navigation panel */
+body.navbar-scrolled .secondary-navbar-custom {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+body.navbar-scrolled .secondary-navbar-custom .nav-link {
+    color: #333 !important;
+}
+body.navbar-scrolled .secondary-navbar-custom .nav-link:hover {
+    color: #1e2125 !important;
+}
+/* === navbar scrolled style end === */
