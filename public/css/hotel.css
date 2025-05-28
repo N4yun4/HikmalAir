@@ -1,107 +1,177 @@
+@media (min-width: 768px) {
+    .hotel-item .hotel-image {
+        height: 100%;
+        border-top-left-radius: calc(0.375rem - 1px);
+        border-bottom-left-radius: calc(0.375rem - 1px);
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
 body {
-    font-family: 'Lato', sans-serif;
-    background-color: #f5f5f5;
-    }
-
-    .hero-section {
-    background: url('/images/HeroMakanan.png') center/cover no-repeat;
-    height: 300px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    }
-
-    .hero-section h2 {
-    color: white;
-    font-size: 3rem;
-    font-weight: bold;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    }
-
-    .meals-container {
-    max-width: 760px;
-    margin: -60px auto 60px auto;
-    padding: 0 15px;
-    position: relative;
-    z-index: 2;
-    }
-
-    .meal-card {
-    background-color:rgb(255, 255, 255);
-    color:rgb(0, 0, 0);
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    margin-bottom: 30px;
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    padding: 1.5rem;
-    }
-
-    .image-wrapper {
-    flex: 0 0 200px;
-    height: 200px;
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: #fff;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    }
-
-    .meal-text h5 {
-    font-size: 1.4rem;
-    font-weight: 800;
-    margin-bottom: 0.4rem;
-    }
-
-    .meal-text p {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color:rgb(0, 0, 0);
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
-    }
+    background-color: #f8f9fa;
+}
 
-    @media (max-width: 576px) {
-    .meal-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+/* === content ===*/
+.pilihhhotel-main-content {
+    flex-grow: 1;
+}
 
-    .image-wrapper {
-        width: 100%;
-        height: auto;
-    }
+.pilihhhotel-main-content .page-title {
+    font-weight: 600;
+    color: #343a40;
+}
 
-    .image-wrapper img {
-        height: auto;
-    }
-    }
+.hotel-item .hotel-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
 
-    .meal-card {
-        position: relative;
-        padding-bottom: 30px;
-    }
+.hotel-item .hotel-name {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.15rem;
+}
 
-    .meal-actions {
-        position: absolute;
-        bottom: 10px;
-        right: 30px;
-    }
+.hotel-item .hotel-location {
+    font-size: 0.85rem;
+    margin-bottom: 0.25rem !important;
+}
 
-    .btn-custom {
-        background-color: #173553;
-        color: white;
-        border: none;
-    }
+.hotel-item .hotel-rating i {
+    font-size: 0.9rem;
+}
+.hotel-item .hotel-rating span {
+    font-size: 0.85rem;
+}
 
-    .btn-custom:hover {
-        background-color: #FFCC01;
-    }
+.hotel-item .hotel-description.small {
+    line-height: 1.5;
+}
+
+.hotel-item .select-room-btn {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2c3e50;
+    border-color: #2c3e50;
+    padding: 0.5rem 0.75rem;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.hotel-item .select-room-btn i {
+    transition: transform 0.2s ease-in-out;
+}
+
+.hotel-item .select-room-btn[aria-expanded="true"] i {
+    transform: rotate(180deg);
+}
+
+.hotel-item .select-room-btn:hover,
+.hotel-item .select-room-btn:focus {
+    background-color: #2c3e50;
+    border-color: #2c3e50;
+    color: #ffffff;
+}
+.hotel-item .select-room-btn:active {
+    background-color: #2c3e50;
+    border-color: #2c3e50;
+    color: #ffffff;
+}
+
+.hotel-booking-details {
+    background-color: #f8f9fa;
+}
+.hotel-booking-details h6 {
+    color: #343a40;
+}
+.hotel-booking-details .form-label.small {
+    font-size: 0.8rem;
+    margin-bottom: 0.25rem;
+    color: #495057;
+}
+.hotel-booking-details .form-control-sm,
+.hotel-booking-details .form-select-sm {
+    font-size: 0.875rem;
+}
+
+.add-to-summary-btn {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+    font-weight: 500;
+}
+
+.add-to-summary-btn:hover,
+.add-to-summary-btn:focus {
+    background-color: #e0a800;
+    border-color: #d39e00;
+    color: #212529;
+}
+.add-to-summary-btn:active {
+    background-color: #c79100;
+    border-color: #b88600;
+    color: #212529;
+}
+
+.order-summary-container .title-section {
+    font-weight: 600;
+    color: #343a40;
+    font-size: 1.5rem;
+}
+
+.selected-hotel-item .card-title {
+    font-size: 1rem;
+    font-weight: 600;
+}
+.selected-hotel-item .remove-hotel-btn i {
+    font-size: 0.9rem;
+}
+.selected-hotel-item .price-summary {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.no-selection-message {
+    border: 2px dashed #e0e0e0;
+    padding: 2rem;
+    border-radius: 0.5rem;
+}
+.no-selection-message i {
+    font-size: 2.5rem;
+}
+
+/* === Total Estimasi === */
+#totalSection h4 {
+    font-weight: 500;
+    color: #212529;
+    margin-bottom: 1 !important;
+    padding-bottom: 0;
+
+}
+
+#totalSection #totalOverallPrice {
+    font-size: 1.75rem;
+    color: #e67e22 !important;
+    font-weight: bold;
+}
+
+.confirm-all-bookings-btn {
+    font-size: 1.1rem;
+    padding: 0.75rem 1.5rem;
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: #212529;
+    font-weight: bold;
+}
+
+.confirm-all-bookings-btn:hover,
+.confirm-all-bookings-btn:focus {
+    background-color: #e0a800;
+    border-color: #d39e00;
+    color: #212529;
+}

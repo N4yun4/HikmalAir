@@ -15,16 +15,13 @@
             {{-- Search Bar --}}
             <form class="d-flex ms-auto me-auto my-2 my-lg-0 search-form-custom" role="search">
                 <div class="input-group">
-                    <span class="input-group-text bg-white border-end-0" id="searchCategoryIcon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid-3x3-gap-fill" viewBox="0 0 16 16">
-                            <path d="M1 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zM1 12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1zm5 0a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1z"/>
-                        </svg>
+                    <span class="input-group-text bg-white border-end-0" id="searchIcon">
+                        <i class="bi bi-search"></i>
                     </span>
-                    <input class="form-control border-start-0" type="search" placeholder="category" aria-label="Search" aria-describedby="searchCategoryIcon">
+                    <input class="form-control border-start-0" type="search" placeholder="Cari penerbangan" aria-label="Search" aria-describedby="searchIcon"> {{-- Placeholder bisa disesuaikan --}}
                 </div>
             </form>
 
-            {{-- akan disesuaikan kembali jika ada database --}}
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownUserMenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,6 +34,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUserMenu">
                         <li><a class="dropdown-item" href="#">Profil Saya</a></li>
                         <li><a class="dropdown-item" href="#">Pengaturan Akun</a></li>
+                        <li><a class="dropdown-item" href="/history">History Pemesanan</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Log Out</a></li>
                     </ul>

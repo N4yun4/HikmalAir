@@ -1,0 +1,71 @@
+/* === CSS untuk Halaman Histori Pemesanan (history.css) === */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+.histori-pesanan-main-content {
+    flex-grow: 1;
+}
+
+.histori-pesanan-main-content .page-title {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.pesanan-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.5rem;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.pesanan-item:hover {
+    box-shadow: 0 0.25rem 1rem rgba(0,0,0,0.1) !important;
+}
+
+.pesanan-item .icon-col i {
+    opacity: 0.7;
+}
+
+.pesanan-item .item-details .item-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.pesanan-item .item-status-date .badge {
+    font-size: 0.75rem;
+    padding: 0.4em 0.75em;
+    font-weight: 500;
+}
+
+.pesanan-item .item-action .price-display {
+    font-size: 1.1rem;
+    color: #e67e22;
+}
+
+.pesanan-item .item-action .btn-sm {
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.give-rating-dropdown {
+    font-size: 0.8rem !important;
+}
+
+.rated-display i.bi-star-fill {
+    font-size: 0.9rem;
+    margin-right: 1px;
+}
+.rated-display .text-light {
+    opacity: 0.5;
+}
+
+.history-list-container .text-center.py-5 i {
+    font-size: 3rem;
+}
+.history-list-container .text-center.py-5 h4 {
+    color: #495057;
+}
