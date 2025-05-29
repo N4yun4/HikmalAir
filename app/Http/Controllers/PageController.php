@@ -23,4 +23,8 @@ class PageController extends Controller
     public function makanan(){
     return view('makanan');
     }
+
+    public function diskon(){
+    return view('diskon');
+    }
 }

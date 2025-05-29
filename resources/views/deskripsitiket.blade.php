@@ -32,10 +32,10 @@
                     <div class="card-body p-lg-4 p-3">
                         <div class="row align-items-center mb-3">
                             <div class="col-auto airline-logo-wrapper">
-                                <i class="bi bi-airplane-fill"></i>
+                                <img src="{{ asset('images/logoBiru.png') }}" alt="Logo Pesawat" class="airline-logo-img">
                             </div>
                             <div class="col">
-                                <h3 class="h5 mb-0 fw-bold">HikmalAir Contoh <small class="fw-normal">(HA-007)</small></h3>
+                                <h3 class="h5 mb-0 fw-bold">HikmalAir <small class="fw-normal">(HA-007)</small></h3>
                                 <span class="badge text-bg-info fw-normal">Ekonomi Plus</span>
                             </div>
                             <div class="col-md-auto text-md-end mt-2 mt-md-0">
@@ -58,7 +58,7 @@
                             <div class="col-md-4 location-info arrival-info">
                                 <div class="time">11:35</div>
                                 <div class="code">CGK</div>
-                                <div class="city text-muted">Jakarta Pusat</div>
+                                <div class="city text-muted">Jakarta</div>
                                 <div class="small text-muted mt-1">Terminal: T3 Ultimate</div>
                             </div>
                         </div>

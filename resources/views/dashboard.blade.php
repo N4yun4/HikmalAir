@@ -161,7 +161,7 @@
                 </div>
                 @if (isset($popularDestinations) && count($popularDestinations) > 0)
                 <div class="text-center mt-4">
-                    <a href="#" class="btn btn-outline-primary rounded-pill">Lihat Semua Destinasi <i class="bi bi-arrow-right ms-1"></i></a>
+                    <a href="\destinasi" class="btn btn-outline-primary rounded-pill">Lihat Semua Destinasi <i class="bi bi-arrow-right ms-1"></i></a>
                 </div>
                 @endif
             </div>

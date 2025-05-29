@@ -2,7 +2,6 @@ body {
     padding-top: 115px;
 }
 
-/* === navbar utama style === */
 .main-navbar-custom {
     background-color: #2c3e50;
     position: fixed;
@@ -37,7 +36,6 @@ body {
     }
 }
 
-/* user dropdown */
 .main-navbar-custom .navbar-nav .nav-link {
     color: #ffffff;
     transition: color 0.3s ease-in-out;
@@ -64,9 +62,7 @@ body {
 .main-navbar-custom .navbar-nav .dropdown-divider {
     border-top: 1px solid #dee2e6;
 }
-/* === navbar utama style end === */
 
-/* === navigation panel style === */
 .secondary-navbar-custom {
     background-color: rgba(255, 255, 255, 0.7) !important;
     border-bottom: none !important;
@@ -83,10 +79,7 @@ body {
 .secondary-navbar-custom .nav-link:hover {
     color: #1e2125;
 }
-/* === navigation panel style end === */
 
-/* === navbar scrolled style === */
-/* navbar utama */
 body.navbar-scrolled .main-navbar-custom {
     background-color: rgba(255, 255, 255, 0.9) !important;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -109,7 +102,6 @@ body.navbar-scrolled .main-navbar-custom .navbar-nav .nav-link svg {
     fill: #333 !important;
 }
 
-/* navigation panel */
 body.navbar-scrolled .secondary-navbar-custom {
     background-color: rgba(255, 255, 255, 0.95) !important;
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
@@ -120,4 +112,3 @@ body.navbar-scrolled .secondary-navbar-custom .nav-link {
 body.navbar-scrolled .secondary-navbar-custom .nav-link:hover {
     color: #1e2125 !important;
 }
-/* === navbar scrolled style end === */

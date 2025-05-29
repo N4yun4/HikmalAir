@@ -1,0 +1,120 @@
+body {
+    font-family: 'Lato', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.hero-section {
+    background: url('/images/destinasi.png') center/cover no-repeat;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.hero-section h2 {
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.destinasi-container {
+    max-width: 760px;
+    margin: -60px auto 60px auto;
+    padding: 0 15px;
+    position: relative;
+    z-index: 2;
+}
+
+.destinasi-card {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.5rem;
+    position: relative;
+    padding-bottom: 30px;
+}
+
+.rating {
+    margin-bottom: 0.4rem;
+    font-size: 1.1rem;
+}
+
+.rating-value {
+    font-weight: 300;
+    color: #000000;
+}
+
+.image-wrapper {
+    flex: 0 0 200px;
+    height: 200px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.destinasi-text h5 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 0.2rem;
+}
+
+.rating {
+    color: #ffc107;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+}
+
+.destinasi-text p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgb(0, 0, 0);
+    margin: 0;
+}
+
+.destinasi-actions {
+    position: absolute;
+    bottom: 10px;
+    right: 30px;
+}
+
+.btn-custom {
+    background-color: #173553;
+    color: white;
+    border: none;
+}
+
+.btn-custom:hover {
+    background-color: #FFCC01;
+}
+
+@media (max-width: 576px) {
+    .destinasi-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .image-wrapper {
+        width: 100%;
+        height: auto;
+    }
+
+    .image-wrapper img {
+        height: auto;
+    }
+}

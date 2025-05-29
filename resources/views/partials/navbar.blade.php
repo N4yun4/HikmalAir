@@ -36,7 +36,7 @@
                         <li><a class="dropdown-item" href="#">Pengaturan Akun</a></li>
                         <li><a class="dropdown-item" href="/history">History Pemesanan</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Log Out</a></li>
+                        <li><a class="dropdown-item" href="/login">Log Out</a></li>
                     </ul>
                 </li>
             </ul>
@@ -53,10 +53,10 @@
                 <a class="nav-link px-3" href="/dashboard">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link px-3" href="#">Tiket Pesawat</a>
+                <a class="nav-link px-3" href="/pilihtiket">Tiket Pesawat</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link px-3" href="#">Destinasi Pilihan</a>
+                <a class="nav-link px-3" href="/destinasi">Destinasi Pilihan</a>
             </li>
         </ul>
     </div>

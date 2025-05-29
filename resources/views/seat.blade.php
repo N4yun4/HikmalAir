@@ -39,14 +39,13 @@
     </div>
     </div>
 
-    <button class="confirm-btn" onclick="handleConfirm()">Konfirmasi Kursi</button>
+    <button class="confirm-btn" onclick="window.location.href='/konfirmasi'">Konfirmasi Kursi</button>
     </div>
 
     @include('partials.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/navbar.js') }}"></script>
-    <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/seat.js')}}"></script>
 </body>
 </html>
