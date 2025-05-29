@@ -1,107 +1,328 @@
 body {
     font-family: 'Lato', sans-serif;
-    background-color: #f5f5f5;
-    }
+    background-color: #ffffff;
+}
 
-    .hero-section {
+.hero-section {
     background: url('/images/HeroMakanan.png') center/cover no-repeat;
+    background-size: cover;
+    background-position: center;
     height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    }
+}
 
-    .hero-section h2 {
+.hero-section h2 {
     color: white;
     font-size: 3rem;
     font-weight: bold;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-    }
+}
 
-    .meals-container {
+/* === content === */
+.meals-container {
     max-width: 760px;
     margin: -60px auto 60px auto;
-    padding: 0 15px;
+    padding: 20px 15px;
     position: relative;
     z-index: 2;
-    }
+    font-family: 'Lato', sans-serif;
+}
 
-    .meal-card {
-    background-color:rgb(255, 255, 255);
-    color:rgb(0, 0, 0);
+.meal-card {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
     display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    padding: 1.5rem;
-    }
+    flex-direction: column;
+}
 
-    .image-wrapper {
+.meal-card-content {
+    display: flex;
+    padding: 1.5rem;
+    gap: 1.5rem;
+}
+
+.meal-image-wrapper {
     flex: 0 0 200px;
     height: 200px;
     border-radius: 10px;
     overflow: hidden;
-    background-color: #fff;
-    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-    }
+}
 
-    .image-wrapper img {
+.meal-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
-    }
+    border-radius: 10px;
+}
 
-    .meal-text h5 {
-    font-size: 1.4rem;
+.meal-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.meal-name {
+    font-size: 1.5rem;
     font-weight: 800;
-    margin-bottom: 0.4rem;
-    }
+    margin-bottom: 0.5rem;
+    color: #173553;
+}
 
-    .meal-text p {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color:rgb(0, 0, 0);
+.meal-price {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+}
+
+.meal-description {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #444;
     margin: 0;
-    }
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
 
-    @media (max-width: 576px) {
-    .meal-card {
+.item-quantity-control {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.quantity-control .quantity-decrement,
+.quantity-control .quantity-increment {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd !important;
+    background: white !important;
+    color: #333 !important;
+    padding: 0 !important;
+    line-height: 1;
+}
+
+.quantity-control .quantity-decrement:hover,
+.quantity-control .quantity-increment:hover {
+    background-color: #173553 !important;
+    color: white !important;
+    border-color: #173553 !important;
+}
+
+.quantity-control .quantity-input {
+    width: 60px !important;
+    text-align: center !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    padding: 0.4rem !important;
+    height: 36px !important;
+    box-shadow: none !important;
+}
+.quantity-control .quantity-input::-webkit-outer-spin-button,
+.quantity-control .quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .meal-card-content {
         flex-direction: column;
-        align-items: flex-start;
+        gap: 1rem;
     }
 
-    .image-wrapper {
+    .meal-image-wrapper {
         width: 100%;
-        height: auto;
+        height: 200px;
+        flex: 0 0 200px;
     }
 
-    .image-wrapper img {
-        height: auto;
-    }
-    }
-
-    .meal-card {
-        position: relative;
-        padding-bottom: 30px;
+    .meal-image {
+        height: 200px;
     }
 
-    .meal-actions {
-        position: absolute;
-        bottom: 10px;
-        right: 30px;
+    .meal-text {
+        align-items: center;
+        text-align: center;
     }
+    .item-quantity-control {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+    .item-quantity-control .d-flex {
+        justify-content: center !important;
+    }
+}
 
-    .btn-custom {
-        background-color: #173553;
-        color: white;
-        border: none;
-    }
 
-    .btn-custom:hover {
-        background-color: #FFCC01;
-    }
+/* === kerangjang belanja === */
+.order-summary-container {
+    border-top: 2px solid #eee;
+    padding-top: 2rem;
+    margin-top: 3rem;
+}
+
+.order-summary-container .title-section {
+    font-weight: 700;
+    color: #173553;
+    font-size: 1.8rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+}
+
+.order-summary-container .no-selection-message {
+    border: 2px dashed #e0e0e0;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    background-color: #f8f9fa;
+}
+
+.order-summary-container .no-selection-message i {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #ccc;
+}
+
+.order-summary-container .no-selection-message p {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+    color: #6c757d;
+}
+.order-summary-container .no-selection-message p.small {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.summary-item.card {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin-bottom: 0.75rem !important;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.summary-item.card:last-child {
+    border-bottom: none;
+}
+
+.summary-item .card-body {
+    padding: 0 !important;
+}
+.summary-item h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.1rem !important;
+}
+.summary-item p.small {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 0 !important;
+}
+.summary-item .item-total-price {
+    font-size: 1rem;
+    color: #173553 !important;
+    font-weight: bold;
+}
+
+
+#totalSection {
+    text-align: center;
+    padding-top: 1.5rem;
+    border-top: 1px solid #ddd;
+    margin-top: 1.5rem;
+}
+
+#totalSection h4 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #173553;
+    margin-bottom: 1rem;
+}
+
+#totalOverallPrice {
+    font-size: 1.8rem;
+    color: #e67e22 !important;
+    font-weight: 700;
+}
+
+.confirm-summary-btn {
+    background-color: #173553;
+    border-color: #173553;
+    color: white;
+    border-radius: 10px !important;
+    padding: 0.8rem 2rem !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 1rem;
+}
+
+.confirm-summary-btn:hover {
+    background-color: #FFCC01;
+    border-color: #FFCC01;
+    color: #000 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.confirm-summary-btn:disabled {
+    background-color: #aeafb0 !important;
+    border-color: #aeafb0 !important;
+    color: #e0e0e0 !important;
+    cursor: not-allowed;
+    opacity: 0.8;
+    transform: none;
+    box-shadow: none;
+}
+
+
+.alert.alert-light {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #495057;
+    padding: 1.5rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+.btn-custom {
+    background-color: #173553;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    border-radius: 0.3rem;
+}
+
+.btn-custom:hover {
+    background-color: #FFCC01;
+    color: #173553;
+}

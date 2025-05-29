@@ -150,7 +150,7 @@
     display: block;
 }
 
-.form-control, 
+.form-control,
 .form-select {
     border-radius: 8px;
     border: 1px solid #ddd;
@@ -161,7 +161,7 @@
     transition: all 0.3s;
 }
 
-.form-control:focus, 
+.form-control:focus,
 .form-select:focus {
     border-color: #173553;
     box-shadow: 0 0 0 0.2rem rgba(23, 53, 83, 0.25);
@@ -265,15 +265,15 @@
     .hotel-card-content {
         flex-direction: column;
     }
-    
+
     .hotel-image-wrapper {
         width: 100%;
     }
-    
+
     .hotel-image {
         height: 200px;
     }
-    
+
     .select-room-btn {
         max-width: 100%;
     }

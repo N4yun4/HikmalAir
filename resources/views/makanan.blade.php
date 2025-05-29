@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,73 +17,80 @@
     @include('partials.navbar')
 
     <div class="hero-section"></div>
-    <div class="meals-container">
 
-        <!-- Card 1 -->
-        <div class="meal-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="image-wrapper">
-            <img src="/images/salad.jpg" alt="Salad" />
-        </div>
-        <div class="meal-text">
-            <h5>Salad</h5>
-            <p>Perpaduan segar dari aneka sayuran hijau pilihan, daun selada yang renyah, tomat, paprika merah, dan potongan mentimun segar yang disajikan dengan saus yang ringan dan menyegarkan.</p>
-        </div>
-        <div class="meal-actions">
-            <button class="btn btn-sm btn-custom px-3 py-1">Pesan</button>
-        </div>
-        </div>
+    <main class="makanan-main-content">
+        <div class="meals-container">
+            <div class="makanan-list-container">
+                @if (isset($daftarMakanan) && count($daftarMakanan) > 0)
+                    @foreach ($daftarMakanan as $item)
 
-        <!-- Card 2 -->
-        <div class="meal-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="image-wrapper">
-            <img src="/images/nasgor.jpg" alt="Fried Rice" />
-        </div>
-        <div class="meal-text">
-            <h5>Nasi Goreng</h5>
-            <p>Nasi goreng harum yang dimasak dengan cita rasa lokal, dipadu dengan potongan sayuran segar, telur, dan sentuhan kecap asin yang seimbang. Cita rasa gurih dan teksturnya yang lembut menghadirkan pengalaman kuliner yang menghibur dan mengenyangkan di atas ketinggian ribuan meter.</p>
-        </div>
-        <div class="meal-actions">
-            <button class="btn btn-sm btn-custom px-3 py-1">Pesan</button>
-        </div>
-        </div>
+                    <div class="meal-card item-card"
+                            data-aos="fade-up"
+                            data-aos-delay="{{ $item['data_aos_delay'] ?? '100' }}"
+                            data-id="{{ $item['id'] }}"
+                            data-price="{{ $item['price'] }}">
+                        <div class="meal-card-content">
+                            <div class="image-wrapper meal-image-wrapper">
+                                <img src="{{ asset($item['image']) }}" class="meal-image" alt="{{ $item['name'] }}" />
+                            </div>
+                            <div class="meal-text item-info">
+                                <h5 class="item-name meal-name">{{ $item['name'] }}</h5>
 
-        <!-- Card 3 -->
-        <div class="meal-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="image-wrapper">
-            <img src="/images/mineral.jpg" alt="Mineral Water" />
-        </div>
-        <div class="meal-text">
-            <h5>Air Mineral</h5>
-            <p>Air mineral murni yang dikemas dalam botol untuk menjaga hidrasi tubuh selama perjalanan. Dingin dan menyegarkan, minuman ini memberikan kesegaran instan yang penting untuk kenyamanan selama penerbangan Anda.</p>
-        </div>
-        <div class="meal-actions">
-            <button class="btn btn-sm btn-custom px-3 py-1">Pesan</button>
-        </div>
-        </div>
+                                <p class="item-price meal-price fw-semibold text-success">
+                                    IDR {{ $item['price_display'] }}
+                                </p>
 
-        <!-- Card 4 -->
-        <div class="meal-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="image-wrapper">
-            <img src="/images/coffee.jpg" alt="Latte" />
+                                <p class="meal-description item-description">{{ $item['deskripsi'] }}</p>
+                                <div class="item-quantity-control mt-3">
+                                    <div class="d-flex align-items-center">
+                                        <label class="me-2 fw-medium">Jumlah:</label>
+                                        <div class="quantity-control">
+                                            <button type="button" class="quantity-decrement btn">
+                                                <i class="bi bi-dash"></i>
+                                            </button>
+                                            <input type="number" class="form-control quantity-input mx-2" value="0" min="0" max="10" readonly />
+                                            <button type="button" class="quantity-increment btn">
+                                                <i class="bi bi-plus"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                @else
+                    <div class="alert alert-light text-center">Belum ada data makanan yang tersedia saat ini.</div>
+                @endif
+            </div>
+
+            @if (isset($daftarMakanan) && count($daftarMakanan) > 0)
+            <div class="order-summary-container">
+                <h3 class="title-section"><i class="bi bi-cup-straw me-2"></i>Ringkasan Pesanan Makanan</h3>
+                <div id="orderSummaryList" class="mb-3">
+                    <div class="text-center py-4 no-selection-message">
+                        <i class="bi bi-basket3 fs-1 text-muted"></i>
+                        <p class="mt-2 text-muted">Keranjang makanan Anda masih kosong.</p>
+                        <p class="small text-muted">Pilih jumlah item makanan atau minuman di atas.</p>
+                    </div>
+                </div>
+                <div class="text-end mt-4 pt-3 border-top" id="totalSection" style="display: none;">
+                    <h4>Total Makanan: <span id="totalOverallPrice" class="fw-bold">IDR 0</span></h4>
+                    <a class="btn confirm-summary-btn mt-2" href="{{ route('konfirmasi') }}">
+                        <i class="bi bi-check2-circle-fill me-1"></i> Konfirmasi Pilihan Makanan
+                    </a>
+                </div>
+            </div>
+            @endif
         </div>
-        <div class="meal-text">
-            <h5>Kopi</h5>
-            <p>Racikan kopi espresso yang lembut dan kuat, dipadukan dengan susu berkualitas. Dihidangkan hangat dengan aroma khas yang menenangkan latte ini adalah teman sempurna untuk momen relaksasi di udara.</p>
-        </div>
-        <div class="meal-actions">
-            <button class="btn btn-sm btn-custom px-3 py-1">Pesan</button>
-        </div>
-        </div>
-        <div class="text-center my-4">
-            <button class="btn btn-custom px-4 py-2">Konfirmasi Pesanan</button>
-        </div>
-    </div>
+    </main>
 
     @include('partials.footer')
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <script>AOS.init({duration: 800,once: true});</script>
+    <script src="{{ asset('js/makanan.js') }}"></script>
+    <script>AOS.init({duration: 800,once: true})</script>
 </body>
 </html>

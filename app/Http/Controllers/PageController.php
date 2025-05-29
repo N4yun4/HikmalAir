@@ -20,10 +20,6 @@ class PageController extends Controller
         return view('seat');
     }
 
-    public function makanan(){
-    return view('makanan');
-    }
-
     public function diskon(){
     return view('diskon');
     }

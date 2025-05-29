@@ -10,13 +10,14 @@ use App\Http\Controllers\KonfirmasiController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\DestinasiController;
 use App\Http\Controllers\MerchantController;
+use App\Http\Controllers\MakananController;
 
 Route::get('/login', [PageController::class, 'login']);
 Route::get('/register', [PageController::class, 'register']);
 Route::get('/seat', [PageController::class, 'seat']);
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/makanan', [PageController::class, 'makanan']);
+Route::get('/makanan', [MakananController::class, 'index'])->name('makanan.index');
 Route::get('/pilihtiket', [PilihTiketController::class, 'index'])->name('pilihtiket');
 Route::get('/deskripsitiket', [DeskripsiTiketController::class, 'index'])->name('deskripsitiket');
 Route::get('/hotel', [HotelController::class, 'index'])->name('hotel');
