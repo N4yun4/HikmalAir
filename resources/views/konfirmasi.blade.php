@@ -178,7 +178,7 @@
                                 <h4 class="mb-0 fw-bold text-danger" id="grandTotalText">IDR {{ $selectedTicket['price_display'] }}</h4>
                             </div>
                             <div class="d-grid mt-4">
-                                <button type="button" class="btn btn-success btn-lg fw-bold pay-now-btn">
+                                <button type="button" class="btn btn-success btn-lg fw-bold pay-now-btn" id="payNowButton">
                                     <i class="bi bi-credit-card-2-front-fill me-2"></i>Bayar Sekarang
                                 </button>
                             </div>
@@ -192,6 +192,24 @@
 
     @include('partials.footer')
 
+    <div class="modal fade" id="paymentSuccessModal" tabindex="-1" aria-labelledby="paymentSuccessModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="paymentSuccessModalLabel">Pembayaran Berhasil!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 3rem;"></i>
+                    <p class="mt-3 fs-5">Terima kasih atas pemesanan Anda.</p>
+                    <p>Detail pemesanan telah dikirimkan ke email Anda.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" id="goToDashboardButton">Kembali ke Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/navbar.js') }}"></script>
     <script src="{{ asset('js/konfirmasi.js') }}"></script>
@@ -202,6 +220,36 @@
             selectedMeals: @json($selectedMealsDetails), // Kirim sebagai objek JSON atau null
             addOnPrices: @json($addOnPrices)
         };
+
+        // Dapatkan referensi ke tombol dan modal
+        const payNowButton = document.getElementById('payNowButton');
+        const paymentSuccessModal = new bootstrap.Modal(document.getElementById('paymentSuccessModal'));
+        const goToDashboardButton = document.getElementById('goToDashboardButton');
+
+        // Tambahkan event listener ke tombol "Bayar Sekarang"
+        payNowButton.addEventListener('click', function() {
+            // Dalam aplikasi nyata, Anda akan melakukan proses pembayaran di sini.
+            // Untuk contoh ini, kita hanya mensimulasikan keberhasilan pembayaran.
+
+            // Tampilkan modal sukses
+            paymentSuccessModal.show();
+        });
+
+        // Tambahkan event listener ke tombol "Kembali ke Dashboard" di dalam modal
+        goToDashboardButton.addEventListener('click', function() {
+            // Redirect ke dashboard
+            window.location.href = '/dashboard'; // Ganti '/dashboard' dengan rute dasbor Anda yang sebenarnya
+        });
+
+        // Opsional: Jika pengguna menutup modal tanpa mengklik "Kembali ke Dashboard"
+        // Anda mungkin tetap ingin mengarahkan mereka atau membiarkan mereka di halaman tersebut.
+        // Untuk saat ini, kita hanya akan mengarahkan saat tombol "Kembali ke Dashboard" diklik.
+        const modalElement = document.getElementById('paymentSuccessModal');
+        modalElement.addEventListener('hidden.bs.modal', function () {
+            // Event ini akan aktif ketika modal telah selesai disembunyikan dari pengguna.
+            // Anda bisa memutuskan apakah ingin mengarahkan pengguna di sini juga.
+            // Untuk saat ini, kita hanya akan mengarahkan ketika tombol "Kembali ke Dashboard" diklik.
+        });
     </script>
 </body>
 </html>

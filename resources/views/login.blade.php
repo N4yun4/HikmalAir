@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login | HikmalAir</title>
   <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
-
 </head>
 <body>
   <div class="container fade-in">
@@ -19,20 +18,56 @@
 
     <div class="form-section fade-in">
       <h2>Login</h2>
-      <form action="" method="POST">
+
+      {{-- MENAMPILKAN PESAN SUKSES DARI SESSION --}}
+      @if (session('success'))
+        <div style="color: green; background-color: #d4edda; border-color: #c3e6cb; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+            {{ session('success') }}
+        </div>
+      @endif
+
+      {{-- MENAMPILKAN PESAN ERROR DARI SESSION (misal: login gagal) --}}
+      @if (session('error'))
+        <div style="color: red; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+            {{ session('error') }}
+        </div>
+      @endif
+
+      {{-- MENAMPILKAN PESAN ERROR VALIDASI (misal: input kosong) --}}
+      @if ($errors->any())
+        <div style="color:red; background-color: #f8d7da; border-color: #f5c6cb; padding: 10px; margin-bottom: 15px; border-radius: 5px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+      @endif
+
+      {{-- PERHATIKAN: action form harus mengarah ke rute POST 'actionlogin' --}}
+      <form action="{{ route('actionlogin') }}" method="POST">
         @csrf
         <div class="input-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" name="username" required>
+          {{-- PERHATIKAN: nama input adalah 'email_or_username' sesuai LoginController --}}
+          <label for="email_or_username">Email atau Username</label>
+          <input type="text" id="email_or_username" name="email_or_username" value="{{ old('email_or_username') }}" required autofocus>
+          {{-- Menampilkan error spesifik untuk input ini --}}
+          @error('email_or_username')
+              <div style="color:red; font-size:0.8em; margin-top: 5px;">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="input-group">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" required>
+          {{-- Menampilkan error spesifik untuk password --}}
+          @error('password')
+              <div style="color:red; font-size:0.8em; margin-top: 5px;">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="actions">
-          <a href="/register">Belum punya akun?</a>
+          <a href="{{ route('register') }}">Belum punya akun?</a> {{-- Gunakan route() --}}
           <button type="submit">Masuk</button>
         </div>
       </form>
@@ -186,6 +221,14 @@
     .form-section button:hover {
       background-color: #ddd;
       transform: scale(1.02);
+    }
+    
+    .success-message, .error-message {
+        font-size: 0.95em;
+        line-height: 1.4;
+    }
+    .success-message li, .error-message li {
+        list-style: none; /* Hapus bullet point untuk list di pesan error */
     }
 </style>
 </html>

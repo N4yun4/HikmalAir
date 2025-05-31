@@ -18,44 +18,101 @@
 
     <div class="form-section fade-in">
       <h2>Sign Up</h2>
-      <form action="" method="POST">
+
+      {{-- Menampilkan pesan sukses dari session --}}
+      @if (session('success'))
+        <div style="color: green; margin-bottom: 10px;">
+            {{ session('success') }}
+        </div>
+      @endif
+
+      {{-- Menampilkan pesan error validasi --}}
+      @if ($errors->any())
+        <div style="color:red; margin-bottom: 10px;">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+      @endif
+
+      {{-- PERHATIKAN BARIS INI: action form harus mengarah ke rute POST yang benar --}}
+      <form action="{{ route('actionregister') }}" method="POST">
         @csrf
         <div class="row">
           <div class="input-group">
             <label for="first_name">Nama Depan</label>
-            <input type="text" id="first_name" name="first_name" required>
+            <input type="text" id="first_name" name="first_name" required
+             value="{{ old('first_name') }}">
+            {{-- Menampilkan error spesifik untuk first_name --}}
+            @error('first_name')
+                <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
+            @enderror
           </div>
           <div class="input-group">
             <label for="last_name">Nama Belakang</label>
-            <input type="text" id="last_name" name="last_name" required>
+            <input type="text" id="last_name" name="last_name" required 
+              value="{{ old('last_name') }}">
+            @error('last_name')
+                <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
+            @enderror
           </div>
         </div>
 
         <div class="input-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" id="email" name="email" required
+            value="{{ old('email') }}">
+          @error('email')
+              <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="input-group">
           <label for="phone">Nomor HP</label>
-          <input type="tel" id="phone" name="phone" required>
+          <input type="tel" id="phone" name="phone" required
+            value="{{ old('phone') }}">
+          @error('phone')
+              <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="input-group">
           <label for="username">Username</label>
-          <input type="text" id="username" name="username" required>
+          <input type="text" id="username" name="username" required
+            value="{{ old('username') }}">
+          @error('username')
+              <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="input-group">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" required>
+          @error('password')
+              <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
+          @enderror
+        </div>
+
+        {{-- Kolom untuk konfirmasi password WAJIB ada karena validasi 'confirmed' --}}
+        <div class="input-group">
+          <label for="password_confirmation">Konfirmasi Password</label>
+          <input type="password" id="password_confirmation" name="password_confirmation" required>
+          @error('password_confirmation')
+              <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="checkbox">
           <label>
-            <input type="checkbox" required>
+            <input type="checkbox" name="terms" required>
             dengan ini, anda menyetujui segala kebijakan dari maskapai kami
           </label>
+          {{-- Anda bisa tambahkan validasi untuk checkbox 'terms' di controller jika perlu --}}
+          @error('terms')
+              <div style="color:red; font-size:0.8em; margin-top: 5px;">{{ $message }}</div>
+          @enderror
         </div>
 
         <div class="actions">
@@ -68,167 +125,167 @@
 </body>
 
 <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Lato', sans-serif;
+  * {
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: url('/images/bgLogin.jpg') no-repeat center center fixed;
+    background-size: cover;
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fade-in 0.8s ease-out;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .left-section {
+    flex: 1;
+    max-width: 950px;
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    padding: 40px 50px;
+    color: white;
+  }
+
+  .logo {
+    width: 190px;
+    height: auto;
+    margin-right: 20px;
+  }
+
+  .separator {
+    border-left: 3px solid white;
+    height: 26vh;
+    margin: 0 10px;
+  }
+
+  .slogan h1 {
+    margin: 0;
+    font-size: 32px;
+    line-height: 1.4;
+    color: white;
+  }
+
+  .legacy {
+    color: #D4AF37;
+  }
+
+  .form-section {
+    background: rgba(23, 53, 83, 0.95);
+    padding: 30px;
+    border-radius: 15px;
+    width: 420px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    margin-right: 40px;
+  }
+
+  .form-section h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: normal;
+  }
+
+  .form-section label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    display: block;
+    font-weight: normal;
+  }
+
+  .form-section input[type="text"],
+  .form-section input[type="email"],
+  .form-section input[type="password"],
+  .form-section input[type="tel"] {
+    width: 100%;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    transition: all 0.3s ease;
+  }
+
+  .form-section input:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #000;
+  }
+
+  .form-section .row {
+    display: flex;
+    gap: 8px;
     }
 
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('/images/bgLogin.jpg') no-repeat center center fixed;
-      background-size: cover;
-    }
+  .form-section .row .input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 
-    @keyframes fade-in {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+  .form-section .input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
 
-    .fade-in {
-      animation: fade-in 0.8s ease-out;
-    }
+  .form-section .checkbox {
+    margin-bottom: 15px;
+    font-size: 12px;
+  }
 
-    .container {
-      display: flex;
-      align-items: center;
-      height: 100vh;
-    }
+  .form-section .actions { 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .left-section {
-      flex: 1;
-      max-width: 950px;
-      display: flex;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.55);
-      padding: 40px 50px;
-      color: white;
-    }
+  .form-section .actions a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 13px;
+  }
 
-    .logo {
-      width: 190px;
-      height: auto;
-      margin-right: 20px;
-    }
+  .form-section button {
+    background-color: white;
+    color: #001324;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: normal;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
 
-    .separator {
-      border-left: 3px solid white;
-      height: 26vh;
-      margin: 0 10px;
-    }
-
-    .slogan h1 {
-      margin: 0;
-      font-size: 32px;
-      line-height: 1.4;
-      color: white;
-    }
-
-    .legacy {
-      color: #D4AF37;
-    }
-
-    .form-section {
-      background: rgba(23, 53, 83, 0.95);
-      padding: 30px;
-      border-radius: 15px;
-      width: 420px;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      margin-right: 40px;
-    }
-
-    .form-section h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
-      font-size: 24px;
-      text-align: center;
-      font-weight: normal;
-    }
-
-    .form-section label {
-      font-size: 13px;
-      margin-bottom: 4px;
-      display: block;
-      font-weight: normal;
-    }
-
-    .form-section input[type="text"],
-    .form-section input[type="email"],
-    .form-section input[type="password"],
-    .form-section input[type="tel"] {
-      width: 100%;
-      padding: 8px 10px;
-      margin-bottom: 10px;
-      border: none;
-      border-radius: 6px;
-      font-size: 13px;
-      transition: all 0.3s ease;
-    }
-
-    .form-section input:focus {
-      outline: none;
-      box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-      background-color: rgba(255, 255, 255, 0.95);
-      color: #000;
-    }
-
-    .form-section .row {
-      display: flex;
-      gap: 8px;
-    }
-
-    .form-section .row .input-group {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .form-section .input-group {
-      display: flex;
-      flex-direction: column;
-      margin-bottom: 10px;
-    }
-
-    .form-section .checkbox {
-      margin-bottom: 15px;
-      font-size: 12px;
-    }
-
-    .form-section .actions {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .form-section .actions a {
-      color: #fff;
-      text-decoration: underline;
-      font-size: 13px;
-    }
-
-    .form-section button {
-      background-color: white;
-      color: #001324;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: normal;
-      font-size: 14px;
-      transition: all 0.3s ease;
-    }
-
-    .form-section button:hover {
-      background-color: #ddd;
-      transform: scale(1.02);
-    }
+  .form-section button:hover {
+    background-color: #ddd;
+    transform: scale(1.02);
+    }  
 </style>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Tiket: Surabaya - Jakarta | HikmalAir</title>
+    <title>Detail Tiket: {{ $ticket->departure_city }} - {{ $ticket->arrival_city }} | HikmalAir</title> {{-- Dinamiskan judul --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
@@ -27,7 +27,7 @@
                 {{-- Detail Penerbangan Card --}}
                 <div class="card detail-card flight-summary mb-4">
                     <h5 class="card-header section-header">
-                        Surabaya (SUB) <i class="bi bi-arrow-right-short"></i> Jakarta (CGK)
+                        {{ $ticket->departure_city }} ({{ $ticket->departure_code }}) <i class="bi bi-arrow-right-short"></i> {{ $ticket->arrival_city }} ({{ $ticket->arrival_code }})
                     </h5>
                     <div class="card-body p-lg-4 p-3">
                         <div class="row align-items-center mb-3">
@@ -35,43 +35,57 @@
                                 <img src="{{ asset('images/logoBiru.png') }}" alt="Logo Pesawat" class="airline-logo-img">
                             </div>
                             <div class="col">
-                                <h3 class="h5 mb-0 fw-bold">HikmalAir <small class="fw-normal">(HA-007)</small></h3>
-                                <span class="badge text-bg-info fw-normal">Ekonomi Plus</span>
+                                <h3 class="h5 mb-0 fw-bold">{{ $ticket->airline_name }} <small class="fw-normal">(HA-{{ $ticket->id }})</small></h3> {{-- HA-ID Tiket sebagai placeholder nomor penerbangan --}}
+                                <span class="badge text-bg-info fw-normal">{{ $ticket->flight_class }}</span>
                             </div>
                             <div class="col-md-auto text-md-end mt-2 mt-md-0">
-                                <span class="text-muted">Tanggal:</span> <strong>Min, 10 Agu 2025</strong>
+                                <span class="text-muted">Tanggal:</span> <strong>{{ $ticket->date->translatedFormat('D, d M Y') }}</strong> {{-- Gunakan objek Carbon dari model --}}
                             </div>
                         </div>
 
                         <div class="row flight-details-grid align-items-center text-center">
                             <div class="col-md-4 location-info departure-info">
-                                <div class="time">10:00</div>
-                                <div class="code">SUB</div>
-                                <div class="city text-muted">Surabaya</div>
-                                <div class="small text-muted mt-1">Terminal: T1 Domestik</div>
+                                <div class="time">{{ $ticket->departure_time }}</div> {{-- Format otomatis dari model --}}
+                                <div class="code">{{ $ticket->departure_code }}</div>
+                                <div class="city text-muted">{{ $ticket->departure_city }}</div>
+                                {{-- Jika ada kolom terminal di DB, bisa ditambahkan di sini --}}
+                                <div class="small text-muted mt-1">Terminal: T1 Domestik</div> {{-- Placeholder jika tidak ada di DB --}}
                             </div>
                             <div class="col-md-4 duration-info my-3 my-md-0">
-                                <div><i class="bi bi-clock me-1"></i> 1j 35m</div>
+                                <div><i class="bi bi-clock me-1"></i> {{ $ticket->duration }}</div>
                                 <div class="line my-1"></div>
-                                <div><i class="bi bi-signpost-split me-1"></i> Langsung</div>
+                                <div><i class="bi bi-signpost-split me-1"></i> {{ $ticket->transit_info }}</div>
                             </div>
                             <div class="col-md-4 location-info arrival-info">
-                                <div class="time">11:35</div>
-                                <div class="code">CGK</div>
-                                <div class="city text-muted">Jakarta</div>
-                                <div class="small text-muted mt-1">Terminal: T3 Ultimate</div>
+                                <div class="time">{{ $ticket->arrival_time }}</div> {{-- Format otomatis dari model --}}
+                                <div class="code">{{ $ticket->arrival_code }}</div>
+                                <div class="city text-muted">{{ $ticket->arrival_city }}</div>
+                                {{-- Jika ada kolom terminal di DB, bisa ditambahkan di sini --}}
+                                <div class="small text-muted mt-1">Terminal: T3 Ultimate</div> {{-- Placeholder jika tidak ada di DB --}}
                             </div>
                         </div>
 
                         <hr class="my-3">
                         <p class="mb-1 small"><strong>Catatan Penerbangan:</strong></p>
-                        <p class="text-muted small mb-0">Ini adalah deskripsi contoh untuk penerbangan. Termasuk bagasi kabin 7kg, pilihan kursi standar, dan makanan ringan gratis.</p>
+                        {{-- Ganti dengan deskripsi dari DB jika ada --}}
+                        <p class="text-muted small mb-0">Tiket ini termasuk bagasi kabin 7kg.</p>
+                        {{-- Anda bisa menambahkan kolom 'notes' atau 'description' di tabel flights --}}
 
                         <hr class="my-3">
                         <p class="mb-1 small"><strong>Fasilitas standar:</strong></p>
                         <div>
+                            {{-- Anda bisa menambahkan kolom 'facilities' sebagai JSON atau text di DB
+                                 atau membuat relasi terpisah untuk fasilitas --}}
                             <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Kabin 7kg</span>
                             <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Pilihan Kursi</span>
+                            {{-- Contoh:
+                            @if($ticket->includes_meals)
+                                <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Makanan Gratis</span>
+                            @endif
+                            @if($ticket->has_wifi)
+                                <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Wi-Fi</span>
+                            @endif
+                            --}}
                         </div>
                     </div>
                 </div>
@@ -80,9 +94,9 @@
                 <div class="card detail-card passenger-form-section mb-4">
                     <h5 class="card-header section-header">Isi Data Pemesan</h5>
                     <div class="card-body p-lg-4 p-3">
-                        <form id="bookingForm" action="#" method="POST">
-                            {{-- @csrf --}}
-                            <input type="hidden" name="ticket_id_dummy" value="777">
+                        <form id="bookingForm" action="{{ route('booking.process') }}" method="POST"> {{-- Anda perlu menentukan route untuk form ini --}}
+                            @csrf {{-- Penting untuk keamanan Laravel --}}
+                            <input type="hidden" name="ticket_id" value="{{ $ticket->id }}"> {{-- Mengirim ID tiket yang dipilih --}}
                             <div class="mb-3">
                                 <label for="contactFullName" class="form-label">Nama Lengkap Pemesan <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-lg" id="contactFullName" name="contact_full_name" placeholder="Sesuai KTP/Paspor" required>
@@ -108,11 +122,11 @@
                         <dl class="price-details mb-3">
                             <div class="row">
                                 <dt class="col-sm-7">Harga Tiket (1 Dewasa)</dt>
-                                <dd class="col-sm-5 text-sm-end">IDR 950.000</dd>
+                                <dd class="col-sm-5 text-sm-end">IDR {{ $ticket->price_display }}</dd> {{-- Gunakan price_display dari DB --}}
                             </div>
                             <div class="row">
                                 <dt class="col-sm-7">Pajak & Biaya Lain</dt>
-                                <dd class="col-sm-5 text-sm-end text-success">Termasuk</dd>
+                                <dd class="col-sm-5 text-sm-end text-success">Termasuk</dd> {{-- Ini masih statis, bisa dinamiskan jika ada kolom di DB --}}
                             </div>
                         </dl>
                     <div class="d-grid mt-3">
@@ -126,7 +140,7 @@
 
     @include('partials.footer')
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr="script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('js/navbar.js') }}"></script>
 </body>
 </html>

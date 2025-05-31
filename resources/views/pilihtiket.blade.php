@@ -14,7 +14,7 @@
     @include('partials.navbar')
 
     <div class="pilihtiket-main-content">
-        {{-- Panel Pencarian  --}}
+        {{-- Panel Pencarian --}}
         <div class="search-panel">
             <form class="row g-3 align-items-end" method="GET" action="{{ route('pilihtiket') }}">
                 <div class="col-lg col-md-6">
@@ -30,11 +30,11 @@
                 </div>
                 <div class="col-lg col-md-6 mt-md-0 mt-3">
                     <label for="departureDate" class="form-label visually-hidden">Tanggal Pergi</label>
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-lg" id="departureDate" name="tanggal_berangkat" placeholder="Tanggal Pergi" value="{{ $searchParams['tanggal_berangkat'] ?? '' }}">
+                    <input type="date" class="form-control form-control-lg" id="departureDate" name="tanggal_berangkat" placeholder="Tanggal Pergi" value="{{ $searchParams['tanggal_berangkat'] ?? '' }}">
                 </div>
                 <div class="col-lg col-md-6 mt-md-0 mt-3" id="returnDateContainer">
                     <label for="returnDate" class="form-label visually-hidden">Tanggal Pulang</label>
-                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-lg" id="returnDate" name="tanggal_pulang" placeholder="Tanggal Pulang" value="{{ $searchParams['tanggal_pulang'] ?? '' }}">
+                    <input type="date" class="form-control form-control-lg" id="returnDate" name="tanggal_pulang" placeholder="Tanggal Pulang" value="{{ $searchParams['tanggal_pulang'] ?? '' }}">
                 </div>
                 <div class="col-lg-auto col-md-12 mt-md-0 mt-3">
                     <label for="promoCode" class="form-label visually-hidden">Kode Promo</label>
@@ -55,14 +55,18 @@
         {{-- pilihan tiket --}}
         <div class="ticket-results-container">
             {{-- Informasi Pencarian --}}
-            @if (!empty($searchParams['dari']) && !empty($searchParams['ke']) && !empty($searchParams['tanggal_berangkat']))
+            @if (!empty($searchParams['dari']) || !empty($searchParams['ke']) || !empty($searchParams['tanggal_berangkat']))
                 <div class="search-summary text-center mb-3 p-2 bg-light border rounded">
                     <p class="mb-0">
                         Menampilkan tiket untuk:
-                        <strong class="text-primary">{{ $searchParams['dari'] }}</strong> <i class="bi bi-arrow-right-short"></i> <strong class="text-primary">{{ $searchParams['ke'] }}</strong>
-                        pada
-                        <strong>{{ \Carbon\Carbon::parse($searchParams['tanggal_berangkat'])->translatedFormat('D, d M Y') }}</strong>
-                        @if($searchParams['pulang_pergi'] && !empty($searchParams['tanggal_pulang']))
+                        @if(!empty($searchParams['dari'])) <strong class="text-primary">{{ $searchParams['dari'] }}</strong> @endif
+                        @if(!empty($searchParams['dari']) && !empty($searchParams['ke'])) <i class="bi bi-arrow-right-short"></i> @endif
+                        @if(!empty($searchParams['ke'])) <strong class="text-primary">{{ $searchParams['ke'] }}</strong> @endif
+                        @if(!empty($searchParams['tanggal_berangkat']))
+                            pada
+                            <strong>{{ \Carbon\Carbon::parse($searchParams['tanggal_berangkat'])->translatedFormat('D, d M Y') }}</strong>
+                        @endif
+                        @if(($searchParams['pulang_pergi'] ?? false) && !empty($searchParams['tanggal_pulang']))
                             <br>Pulang: <strong>{{ \Carbon\Carbon::parse($searchParams['tanggal_pulang'])->translatedFormat('D, d M Y') }}</strong>
                         @endif
                     </p>
@@ -76,9 +80,10 @@
                 <button class="btn filter-btn" data-filter="malam">Jam Malam (18-00)</button>
             </div>
 
-            {{-- Area Daftar Tiket --}}
+            {{-- Area Daftar Tiket Pergi --}}
             <div id="ticketListContainer">
                 @if (isset($tickets) && count($tickets) > 0)
+                    <h3 class="mt-4 mb-3">Tiket Pergi</h3>
                     @foreach ($tickets as $ticket)
                     <div class="card ticket-item mb-3 shadow-sm">
                         <div class="card-body p-3">
@@ -86,25 +91,27 @@
                                 <div class="col-lg-8 col-md-7">
                                     <div class="d-flex align-items-center justify-content-around text-center flight-route">
                                         <div class="departure-info">
-                                            <div class="fs-5 fw-bold flight-time">{{ $ticket['departure_time'] }}</div>
-                                            <div class="small airport-code">{{ $ticket['departure_code'] }}</div>
-                                            <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket['departure_city'] }}</div>
+                                            {{-- MENGGUNAKAN NOTASI OBJEK (->) DAN FORMAT CARBON --}}
+                                            <div class="fs-5 fw-bold flight-time">{{ $ticket->departure_time->format('H:i') }}</div>
+                                            <div class="small airport-code">{{ $ticket->departure_code }}</div>
+                                            <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket->departure_city }}</div>
                                         </div>
                                         <div class="route-line mx-sm-2 mx-1">
-                                            <small class="text-muted flight-duration d-block mb-1">{{ $ticket['duration'] }}</small>
+                                            <small class="text-muted flight-duration d-block mb-1">{{ $ticket->duration }}</small>
                                             <div class="line"></div>
-                                            <small class="text-primary fw-medium flight-transit d-block mt-1">{{ $ticket['transit_info'] }}</small>
+                                            <small class="text-primary fw-medium flight-transit d-block mt-1">{{ $ticket->transit_info }}</small>
                                         </div>
                                         <div class="arrival-info">
-                                            <div class="fs-5 fw-bold flight-time">{{ $ticket['arrival_time'] }}</div>
-                                            <div class="small airport-code">{{ $ticket['arrival_code'] }}</div>
-                                            <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket['arrival_city'] }}</div>
+                                            {{-- MENGGUNAKAN NOTASI OBJEK (->) DAN FORMAT CARBON --}}
+                                            <div class="fs-5 fw-bold flight-time">{{ $ticket->arrival_time->format('H:i') }}</div>
+                                            <div class="small airport-code">{{ $ticket->arrival_code }}</div>
+                                            <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket->arrival_city }}</div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-5 text-md-end text-center mt-3 mt-md-0 price-info">
-                                    <div class="ticket-price fw-bold fs-5 mb-2">IDR {{ $ticket['price_display'] }}</div>
-                                    <a href="{{ route('tiket.deskripsi', ['id' => $ticket['id']]) }}" class="btn btn-warning btn-sm fw-bold w-50 w-md-auto btn-pilih-tiket">PILIH</a>
+                                    <div class="ticket-price fw-bold fs-5 mb-2">IDR {{ $ticket->price_display }}</div>
+                                    <a href="{{ route('tiket.deskripsi', ['id' => $ticket->id]) }}" class="btn btn-warning btn-sm fw-bold w-50 w-md-auto btn-pilih-tiket">PILIH</a>
                                 </div>
                             </div>
                         </div>
@@ -113,11 +120,55 @@
                 @else
                     <div class="alert alert-warning text-center shadow-sm" role="alert">
                         <i class="bi bi-exclamation-triangle-fill fs-4 me-2"></i>
-                        <h5 class="alert-heading mt-1">Tiket Tidak Ditemukan</h5>
-                        <p class="mb-0">Maaf, tidak ada penerbangan yang tersedia untuk rute dan tanggal yang Anda pilih. Silakan coba ubah pencarian Anda.</p>
+                        <h5 class="alert-heading mt-1">Tiket Pergi Tidak Ditemukan</h5>
+                        <p class="mb-0">Maaf, tidak ada penerbangan pergi yang tersedia untuk rute dan tanggal yang Anda pilih. Silakan coba ubah pencarian Anda.</p>
                     </div>
                 @endif
             </div>
+
+            {{-- Area Daftar Tiket Pulang --}}
+            @if (isset($returnTickets) && count($returnTickets) > 0)
+                <h3 class="mt-5 mb-3">Tiket Pulang</h3>
+                <div id="returnTicketListContainer">
+                    @foreach ($returnTickets as $ticket)
+                        <div class="card ticket-item mb-3 shadow-sm">
+                            <div class="card-body p-3">
+                                <div class="row g-2 align-items-center">
+                                    <div class="col-lg-8 col-md-7">
+                                        <div class="d-flex align-items-center justify-content-around text-center flight-route">
+                                            <div class="departure-info">
+                                                <div class="fs-5 fw-bold flight-time">{{ $ticket->departure_time->format('H:i') }}</div>
+                                                <div class="small airport-code">{{ $ticket->departure_code }}</div>
+                                                <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket->departure_city }}</div>
+                                            </div>
+                                            <div class="route-line mx-sm-2 mx-1">
+                                                <small class="text-muted flight-duration d-block mb-1">{{ $ticket->duration }}</small>
+                                                <div class="line"></div>
+                                                <small class="text-primary fw-medium flight-transit d-block mt-1">{{ $ticket->transit_info }}</small>
+                                            </div>
+                                            <div class="arrival-info">
+                                                <div class="fs-5 fw-bold flight-time">{{ $ticket->arrival_time->format('H:i') }}</div>
+                                                <div class="small airport-code">{{ $ticket->arrival_code }}</div>
+                                                <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket->arrival_city }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-5 text-md-end text-center mt-3 mt-md-0 price-info">
+                                        <div class="ticket-price fw-bold fs-5 mb-2">IDR {{ $ticket->price_display }}</div>
+                                        <a href="{{ route('tiket.deskripsi', ['id' => $ticket->id]) }}" class="btn btn-warning btn-sm fw-bold w-50 w-md-auto btn-pilih-tiket">PILIH</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @elseif(($searchParams['pulang_pergi'] ?? false) && !empty($searchParams['tanggal_pulang']))
+                <div class="alert alert-warning text-center mt-4 shadow-sm" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill fs-4 me-2"></i>
+                    <h5 class="alert-heading mt-1">Tiket Pulang Tidak Ditemukan</h5>
+                    <p class="mb-0">Maaf, tidak ada penerbangan pulang yang tersedia untuk rute dan tanggal yang Anda pilih. Silakan coba ubah pencarian Anda.</p>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -128,6 +179,81 @@
     <script src="{{ asset('js/searchpanel.js')}}"></script>
     <script src="{{ asset('js/pilihtiket.js')}}"></script>
     <script>
+        // Script untuk toggle Tanggal Pulang
+        const returnTripSwitch = document.getElementById('returnTripSwitch');
+        const returnDateContainer = document.getElementById('returnDateContainer');
+        const returnDateInput = document.getElementById('returnDate');
+
+        function toggleReturnDate() {
+            if (returnTripSwitch.checked) {
+                returnDateContainer.style.display = 'block';
+                returnDateInput.setAttribute('required', 'required'); // Tanggal pulang jadi wajib
+            } else {
+                returnDateContainer.style.display = 'none';
+                returnDateInput.removeAttribute('required'); // Tanggal pulang tidak wajib
+                returnDateInput.value = ''; // Kosongkan nilai saat dimatikan
+            }
+        }
+
+        returnTripSwitch.addEventListener('change', toggleReturnDate);
+
+        // Panggil saat halaman dimuat untuk menyesuaikan status awal
+        toggleReturnDate();
+
+        // Script untuk swap lokasi (dari/ke)
+        const swapLocationsButton = document.getElementById('swapLocationsButton');
+        const departureCityInput = document.getElementById('departureCity');
+        const arrivalCityInput = document.getElementById('arrivalCity');
+
+        swapLocationsButton.addEventListener('click', function() {
+            const temp = departureCityInput.value;
+            departureCityInput.value = arrivalCityInput.value;
+            arrivalCityInput.value = temp;
+        });
+
+        // Script untuk filter jam (ini butuh panggil kembali data atau filter di client-side)
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const ticketItems = document.querySelectorAll('.ticket-item'); // Semua kartu tiket
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Hapus 'active' dari semua tombol
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Tambahkan 'active' ke tombol yang diklik
+                this.classList.add('active');
+
+                const filterType = this.dataset.filter;
+
+                ticketItems.forEach(item => {
+                    const departureTimeStr = item.querySelector('.flight-time').textContent; // Ambil waktu keberangkatan
+                    const [hours, minutes] = departureTimeStr.split(':').map(Number);
+                    const departureHour = hours;
+
+                    let showTicket = false;
+
+                    switch (filterType) {
+                        case 'semua':
+                            showTicket = true;
+                            break;
+                        case 'pagi': // 05:00 - 10:59
+                            showTicket = (departureHour >= 5 && departureHour < 11);
+                            break;
+                        case 'siang': // 11:00 - 14:59
+                            showTicket = (departureHour >= 11 && departureHour < 15);
+                            break;
+                        case 'malam': // 18:00 - 23:59
+                            showTicket = (departureHour >= 18 && departureHour < 24);
+                            break;
+                    }
+
+                    if (showTicket) {
+                        item.style.display = ''; // Tampilkan
+                    } else {
+                        item.style.display = 'none'; // Sembunyikan
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>

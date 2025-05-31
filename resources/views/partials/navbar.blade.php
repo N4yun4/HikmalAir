@@ -29,14 +29,25 @@
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                         </svg>
-                        <span>Nama User</span>
+                        @auth {{-- Memastikan user sudah login sebelum menampilkan nama --}}
+                            <span>{{ Auth::user()->username }}</span>
+                        @else {{-- Jika belum login, tampilkan tombol login/daftar --}}
+                            <span>Guest</span> {{-- Atau bisa diganti dengan link Login/Register di sini --}}
+                        @endauth
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUserMenu">
                         <li><a class="dropdown-item" href="#">Profil Saya</a></li>
                         <li><a class="dropdown-item" href="#">Pengaturan Akun</a></li>
                         <li><a class="dropdown-item" href="/history">History Pemesanan</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="/login">Log Out</a></li>
+                        <li>
+                            <form id="logout-form" action="{{ route('actionlogout') }}" method="POST" style="display: none;">
+                            @csrf
+                            </form>
+                            <a class="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Log Out
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
