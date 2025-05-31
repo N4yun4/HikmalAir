@@ -1,5 +1,6 @@
 <?php
 
+// user controller
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\DashboardController;
@@ -13,6 +14,9 @@ use App\Http\Controllers\MerchantController;
 use App\Http\Controllers\MakananController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BookingController; // Pastikan ini diimpor!
+
+// admin controller
+use App\Http\Controllers\AdminController;
 
 // Rute untuk menampilkan form login dan memproses login
 Route::get('/login', [LoginController::class, 'login'])->name('login');
@@ -44,3 +48,27 @@ Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('acti
 Route::post('/booking/process', [BookingController::class, 'processBooking'])->name('booking.process');
 Route::get('/booking/confirmation/{booking_code}', [BookingController::class, 'confirmation'])->name('booking.confirmation');
 // ------------------------------
+
+// Admin management page
+Route::get('/admin', [AdminController::class, 'index']);
+
+// API Routes untuk Admin Management
+Route::prefix('api')->group(function () {
+    Route::get('/admins', [AdminController::class, 'list']);
+    Route::post('/admins', [AdminController::class, 'store']);
+    Route::put('/admins/{id}', [AdminController::class, 'update']);
+    Route::delete('/admins/{id}', [AdminController::class, 'delete']);
+});
+
+// Admin authentication routes
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/login', [App\Http\Controllers\Admin\AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Admin\AuthController::class, 'login'])->name('login.submit');
+    Route::post('/logout', [App\Http\Controllers\Admin\AuthController::class, 'logout'])->name('logout');
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('dashboard');
+    });
+});
