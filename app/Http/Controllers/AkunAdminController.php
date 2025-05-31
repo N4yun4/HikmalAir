@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Validator;
 
-class AdminController extends Controller
+class AkunAdminController extends Controller
 {
     public function index() {
-        return view('admin.index');
+        return view('admin.akunadmin');
     }
 
     // API list admin

@@ -16,7 +16,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\BookingController; // Pastikan ini diimpor!
 
 // admin controller
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AkunAdminController;
 
 // Rute untuk menampilkan form login dan memproses login
 Route::get('/login', [LoginController::class, 'login'])->name('login');
@@ -50,14 +50,14 @@ Route::get('/booking/confirmation/{booking_code}', [BookingController::class, 'c
 // ------------------------------
 
 // Admin management page
-Route::get('/admin', [AdminController::class, 'index']);
+Route::get('/admin/akunadmin', [AkunAdminController::class, 'index']); // Route alternatif
 
 // API Routes untuk Admin Management
 Route::prefix('api')->group(function () {
-    Route::get('/admins', [AdminController::class, 'list']);
-    Route::post('/admins', [AdminController::class, 'store']);
-    Route::put('/admins/{id}', [AdminController::class, 'update']);
-    Route::delete('/admins/{id}', [AdminController::class, 'delete']);
+    Route::get('/admins', [AkunAdminController::class, 'list']);
+    Route::post('/admins', [AkunAdminController::class, 'store']);
+    Route::put('/admins/{id}', [AkunAdminController::class, 'update']);
+    Route::delete('/admins/{id}', [AkunAdminController::class, 'delete']);
 });
 
 // Admin authentication routes
