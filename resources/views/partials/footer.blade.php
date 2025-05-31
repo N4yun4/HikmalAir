@@ -40,6 +40,6 @@
 
     {{-- copyright --}}
     <div class="footer-bottom text-center py-3 mt-4">
-        <small>&copy; {{ date('Y') }} HikmaAir. All Rights Reserved.</small>
+        <small>&copy; {{ date('Y') }} HikmalAir. All Rights Reserved.</small>
     </div>
 </footer>
