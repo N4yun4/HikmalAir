@@ -1,3 +1,22 @@
+Fitur - Fitur dari HikmalAir :
+- Login Admin dan User
+- Pemesanan tiket untuk user
+- Pemasaran tiket oleh admin
+- Harga variatif
+- Merchandise hikmal
+- Pencetan kursi
+- Database : User, admin, Track pesawat, harga, pesawat
+- Rating (ofcourse memakai muka hikmal)
+- Diskon (kupon atau seasonal event)
+- Nambah extra bagasi
+- Meals on board
+- Penjemputan atau pengantaran bandara (ParaniMal)
+- Jasa porter (AngkatinMal)
+- Matel (TidurinMal)
+- CS (BalesinMal)
+- Destinasi pilihan (Hikmal's Choice)
+- Status Pemesanan (InfoMal)
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
