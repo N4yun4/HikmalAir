@@ -11,7 +11,7 @@
                 <div class="footer-address ps-3" style="border-left: 3px solid #ffffff; height: 80px;">
                     <p class="fw-bold fs-5">HikmalAir</p>
                     <p>Jl. Ketintang, Kec. Gayungan</p>
-                    <p>Kota Surabaya, Jawa Timur 60231</p>
+                    <p>Kota Surabaya, Jawa Timur, Indonesia 60231</p>
                 </div>
             </div>
 
@@ -21,7 +21,7 @@
                 <ul class="list-unstyled footer-links">
                     <li><a href="#">Hubungi Kami</a></li>
                     <li><a href="#">FAQ / Bantuan</a></li>
-                    <li><a href="#">Tentang HikmaAir</a></li>
+                    <li><a href="#">Tentang HikmalAir</a></li>
                 </ul>
             </div>
 
