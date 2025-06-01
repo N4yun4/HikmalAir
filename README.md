@@ -1,3 +1,10 @@
+Created by :
+
+- Andy Hikmal Parakkasi 23051204002 
+- Faiz Muhammad Hakim 23051204020
+- Achmad Daffa Fachriansyah 23051204022  
+- Athalla Bayanaka Maheswara 23051204034 
+
 Fitur - Fitur dari HikmalAir :
 - Login Admin dan User
 - Pemesanan tiket untuk user
