@@ -5,12 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Data Flight HikmalAir</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/adminnavbar.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/tiketadmin.css') }}" />
 </head>
 <body onload="fetchFlights()">
+    @include('partials.adminnavbar')
+
     <div class="container">
-        <header>
+        <header class="d-flex justify-content-between align-items-center mb-4">
             <h1>Data Flight HikmalAir</h1>
+            <a href="{{ route('admin.dashboardadmin') }}" class="btn btn-custom">
+                ← Kembali ke Dashboard
+            </a>
         </header>
 
         <!-- Form untuk menambahkan flight -->

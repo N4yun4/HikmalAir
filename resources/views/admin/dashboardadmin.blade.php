@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Admin</title>
-    <link  href="{{ asset('https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link  href="{{ asset('css/dashboardadmin.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/adminnavbar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/dashboardadmin.css') }}">
 </head>
 <body class="bg-light">
+    @include('partials.adminnavbar')
+
     <div class="container py-5">
         <h2 class="mb-4 text-center">Dashboard Admin</h2>
         <div class="row justify-content-center">

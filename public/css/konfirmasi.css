@@ -141,3 +141,8 @@ body {
     color: #2c3e50;
 }
 
+.btn-back-dashbord{
+    background-color: #e0a800 !important;
+    border-color: #e0a800 !important;
+    color: #ffffff !important;
+}

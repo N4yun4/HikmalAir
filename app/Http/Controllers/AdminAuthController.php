@@ -15,14 +15,14 @@ class AdminAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'usr_admin' => 'required',
             'pass_admin' => 'required',
         ]);
 
         if (Auth::guard('admin')->attempt([
-            'usr_admin' => $credentials['usr_admin'],
-            'pass_admin' => $credentials['pass_admin']
+            'usr_admin' => $request->usr_admin,
+            'password' => $request->pass_admin,
         ])) {
             return redirect()->intended('/admin/dashboard');
         }

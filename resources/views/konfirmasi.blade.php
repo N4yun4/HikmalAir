@@ -205,7 +205,7 @@
                     <p>Detail pemesanan telah dikirimkan ke email Anda.</p>
                 </div>
                 <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-primary" id="goToDashboardButton">Kembali ke Dashboard</button>
+                    <button type="button" class="btn btn-primary btn-back-dashbord" id="goToDashboardButton">Kembali ke Dashboard</button>
                 </div>
             </div>
         </div>

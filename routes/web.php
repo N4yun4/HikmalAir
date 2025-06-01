@@ -23,6 +23,14 @@ use App\Http\Controllers\TiketAdminController;
 // =====================================================================================================================================================================
 
 // =====================================================================================================================================================================
+// USER ROUTES
+// =====================================================================================================================================================================
+// Rute untuk halaman utama tanpa midedleware
+// Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
 // Rute untuk menampilkan form login dan memproses login
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
@@ -33,15 +41,11 @@ Route::get('/register', [PageController::class, 'register'])->name('register');
 // Rute untuk memproses data registrasi (WAJIB DITAMBAHKAN)
 Route::post('/actionregister', [PageController::class, 'actionregister'])->name('actionregister');
 Route::post('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
-
 Route::get('/seat', [PageController::class, 'seat']);
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 Route::get('/makanan', [MakananController::class, 'index'])->name('makanan.index');
 Route::get('/pilihtiket', [PilihTiketController::class, 'index'])->name('pilihtiket');
-// Route::get('/deskripsitiket', [DeskripsiTiketController::class, 'index'])->name('deskripsitiket'); // Ini mungkin tidak perlu jika Anda selalu menggunakan /tiket/deskripsi/{id}
 Route::get('/hotel', [HotelController::class, 'index'])->name('hotel');
-// route::get('/konfirmasi', [KonfirmasiController::class, 'index'])->name('konfirmasi');
 Route::get('/tiket/deskripsi/{id}', [DeskripsiTiketController::class, 'show'])->name('tiket.deskripsi');
 Route::get('/history', [HistoryController::class, 'index'])->name('history.tiket');
 Route::get('/destinasi', [DestinasiController::class, 'destinasi']);
@@ -56,22 +60,27 @@ Route::get('/booking/confirmation/{booking_code}', [BookingController::class, 'c
 
 
 // =====================================================================================================================================================================
+// ADMIN ROUTES
+// =====================================================================================================================================================================
 // admin login routes
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
 Route::post('/admin/login', [AdminAuthController::class, 'login']);
 Route::post('/admin/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+Route::middleware('guest:admin')->group(function () {
+    Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/admin/login', [AdminAuthController::class, 'login']);
+});
 
 // Halaman dashboard admin
 Route::get('/admin/dashboard', function () {
     return view('admin.dashboardadmin');
-})->name('admin.dashboardadmin');
-
+})->middleware('auth:admin')->name('admin.dashboardadmin');
 
 // Akun Admin management page
-Route::get('/admin/akunadmin', [AkunAdminController::class, 'index']);
+Route::get('/admin/akunadmin', [AkunAdminController::class, 'index'])->middleware('auth:admin');
 
 // Halaman tiket admin
-Route::get('/admin/tiketadmin', [TiketAdminController::class, 'index']);
+Route::get('/admin/tiketadmin', [TiketAdminController::class, 'index'])->middleware('auth:admin');
 
 // API Routes untuk Admin Management
 Route::prefix('api')->group(function () {
