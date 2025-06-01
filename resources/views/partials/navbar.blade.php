@@ -36,8 +36,8 @@
                         @endauth
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUserMenu">
-                        <li><a class="dropdown-item" href="#">Profil Saya</a></li>
-                        <li><a class="dropdown-item" href="#">Pengaturan Akun</a></li>
+                        <!-- <li><a class="dropdown-item" href="#">Profil Saya</a></li>
+                        <li><a class="dropdown-item" href="#">Pengaturan Akun</a></li> -->
                         <li><a class="dropdown-item" href="/history">History Pemesanan</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>

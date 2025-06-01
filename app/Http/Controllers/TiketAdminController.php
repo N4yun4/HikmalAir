@@ -8,12 +8,10 @@ use Illuminate\Support\Facades\Validator;
 
 class TiketAdminController extends Controller
 {
-    // Tampilkan halaman flight management
     public function index() {
         return view('admin.tiketadmin');
     }
 
-    // API: List semua flights
     public function list() {
         try {
             $flights = Flight::orderBy('date', 'desc')->orderBy('departure_time', 'asc')->get();
@@ -23,10 +21,8 @@ class TiketAdminController extends Controller
         }
     }
 
-    // API: Tambah flight baru
     public function store(Request $request) {
         try {
-            // Validasi input
             $validator = Validator::make($request->all(), [
                 'airline_name' => 'required|string|max:150',
                 'departure_city' => 'required|string|max:200',
@@ -50,7 +46,6 @@ class TiketAdminController extends Controller
                 ], 422);
             }
 
-            // Buat flight baru
             $flight = Flight::create($request->all());
 
             return response()->json([
@@ -65,7 +60,6 @@ class TiketAdminController extends Controller
         }
     }
 
-    // API: Update flight
     public function update(Request $request, $id) {
         try {
             $flight = Flight::find($id);
@@ -73,7 +67,6 @@ class TiketAdminController extends Controller
                 return response()->json(['message' => 'Flight tidak ditemukan'], 404);
             }
 
-            // Validasi input
             $validator = Validator::make($request->all(), [
                 'airline_name' => 'required|string|max:150',
                 'departure_city' => 'required|string|max:200',
@@ -97,7 +90,6 @@ class TiketAdminController extends Controller
                 ], 422);
             }
 
-            // Update data
             $flight->update($request->all());
 
             return response()->json([
@@ -112,7 +104,6 @@ class TiketAdminController extends Controller
         }
     }
 
-    // API: Hapus flight
     public function delete($id) {
         try {
             $flight = Flight::find($id);

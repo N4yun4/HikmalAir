@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Carbon\Carbon; // Aktifkan jika kamu perlu memformat tanggal di sini
 
 class HistoryController extends Controller
 {
     public function index()
     {
-        // Data Dummy untuk Histori Pemesanan (Sama seperti yang kamu berikan)
         $daftarPemesanan = [
             [
                 'id_pemesanan' => 'HA-INV-00123',
@@ -48,8 +46,6 @@ class HistoryController extends Controller
                 'rating_value' => null
             ],
         ];
-
-        // Mengirim data $daftarPemesanan ke view 'historipesanan.blade.php'
-        return view('history', ['daftarPemesanan' => $daftarPemesanan]); // GANTI 'history' menjadi 'historipesanan'
+        return view('history', ['daftarPemesanan' => $daftarPemesanan]);
     }
 }

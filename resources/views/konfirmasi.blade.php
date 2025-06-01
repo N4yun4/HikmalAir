@@ -96,13 +96,39 @@
                                     @endforeach
                                 </ul>
                                 <p><strong>Subtotal Makanan: IDR {{ $selectedMealsDetails['price_display'] }}</strong></p>
-                                <a href="#" class="btn btn-sm btn-outline-secondary mt-2"> {{-- Ganti href ke halaman edit makanan --}}
+                                <a href="{{ route('#') }}" class="btn btn-sm btn-outline-secondary mt-2">
                                     <i class="bi bi-pencil-square me-1"></i> Ubah Pilihan Makanan
                                 </a>
                             @else
                                 <p class="mb-2">Anda belum memilih makanan atau minuman.</p>
-                                <a href="#" class="btn btn-outline-primary"> {{-- Ganti href ke halaman pilih makanan --}}
+                                <a href="{{ route('#') }}" class="btn btn-outline-primary">
                                     Pilih Makanan & Minuman <i class="bi bi-arrow-right-short"></i>
+                                </a>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Merchandise --}}
+                    <div class="card info-card mb-4 shadow-sm">
+                        <div class="card-header section-title-header">
+                            <i class="bi bi-bag-heart me-2"></i>Merchandise Eksklusif dari HikmalAir
+                        </div>
+                        <div class="card-body">
+                            @if (!empty($selectedMerchDetails) && !empty($selectedMerchDetails['items']))
+                                <h6 class="mb-2">Merchandise Pilihan Anda:</h6>
+                                <ul>
+                                    @foreach ($selectedMerchDetails['items'] as $item)
+                                        <li>{{ $item }}</li>
+                                    @endforeach
+                                </ul>
+                                <p><strong>Subtotal Merchandise: IDR {{ $selectedMerchDetails['price_display'] ?? '0' }}</strong></p>
+                                <a href="{{ route('merchant') }}" class="btn btn-sm btn-outline-secondary mt-2">
+                                    <i class="bi bi-pencil-square me-1"></i> Ubah Pilihan Merchandise
+                                </a>
+                            @else
+                                <p class="mb-2">Anda belum memilih merchandise apapun.</p>
+                                <a href="{{ route('merchant') }}" class="btn btn-outline-primary">
+                                    Pilih Merchandise <i class="bi bi-arrow-right-short"></i>
                                 </a>
                             @endif
                         </div>
@@ -216,39 +242,25 @@
     <script>
         const RIDEPOData = {
             selectedTicketPrice: {{ $selectedTicket['price_int'] ?? 0 }},
-            selectedHotel: @json($selectedHotelDetails), // Kirim sebagai objek JSON atau null
-            selectedMeals: @json($selectedMealsDetails), // Kirim sebagai objek JSON atau null
+            selectedHotel: @json($selectedHotelDetails),
+            selectedMeals: @json($selectedMealsDetails),
             addOnPrices: @json($addOnPrices)
         };
 
-        // Dapatkan referensi ke tombol dan modal
         const payNowButton = document.getElementById('payNowButton');
         const paymentSuccessModal = new bootstrap.Modal(document.getElementById('paymentSuccessModal'));
         const goToDashboardButton = document.getElementById('goToDashboardButton');
 
-        // Tambahkan event listener ke tombol "Bayar Sekarang"
         payNowButton.addEventListener('click', function() {
-            // Dalam aplikasi nyata, Anda akan melakukan proses pembayaran di sini.
-            // Untuk contoh ini, kita hanya mensimulasikan keberhasilan pembayaran.
-
-            // Tampilkan modal sukses
             paymentSuccessModal.show();
         });
 
-        // Tambahkan event listener ke tombol "Kembali ke Dashboard" di dalam modal
         goToDashboardButton.addEventListener('click', function() {
-            // Redirect ke dashboard
-            window.location.href = '/dashboard'; // Ganti '/dashboard' dengan rute dasbor Anda yang sebenarnya
+            window.location.href = '/dashboard';
         });
 
-        // Opsional: Jika pengguna menutup modal tanpa mengklik "Kembali ke Dashboard"
-        // Anda mungkin tetap ingin mengarahkan mereka atau membiarkan mereka di halaman tersebut.
-        // Untuk saat ini, kita hanya akan mengarahkan saat tombol "Kembali ke Dashboard" diklik.
         const modalElement = document.getElementById('paymentSuccessModal');
         modalElement.addEventListener('hidden.bs.modal', function () {
-            // Event ini akan aktif ketika modal telah selesai disembunyikan dari pengguna.
-            // Anda bisa memutuskan apakah ingin mengarahkan pengguna di sini juga.
-            // Untuk saat ini, kita hanya akan mengarahkan ketika tombol "Kembali ke Dashboard" diklik.
         });
     </script>
 </body>

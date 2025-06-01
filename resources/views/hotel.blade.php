@@ -15,7 +15,6 @@
 <body>
     @include('partials.navbar')
 
-    <!-- Hero Section -->
     <div class="hero-section"></div>
 
     <main class="pilihhhotel-main-content py-4">

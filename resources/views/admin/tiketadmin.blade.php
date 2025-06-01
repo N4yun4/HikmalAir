@@ -21,7 +21,6 @@
             </a>
         </header>
 
-        <!-- Form untuk menambahkan flight -->
         <section class="form-section">
             <h2>Tambah Flight</h2>
             <form onsubmit="event.preventDefault(); addFlight();">
@@ -109,7 +108,6 @@
             </form>
         </section>
 
-        <!-- Tabel Data Flight -->
         <section class="table-section">
             <h2>Data Flight</h2>
             <div style="overflow-x: auto;">
@@ -137,7 +135,6 @@
             </div>
         </section>
 
-        <!-- Form Edit (Modal) -->
         <div id="overlay" class="overlay" onclick="closeEditForm()"></div>
         <div id="editFormContainer" class="form-section">
             <h2>Edit Flight</h2>
@@ -235,15 +232,12 @@
     <script>
         const apiUrl = '/api/flights';
 
-        // Setup CSRF token for all AJAX requests
         function setupCSRF() {
             const token = document.querySelector('meta[name="csrf-token"]');
             if (token) {
                 window.csrfToken = token.getAttribute('content');
             }
         }
-
-        // Call setup on page load
         setupCSRF();
 
         async function fetchFlights() {
@@ -430,7 +424,6 @@
                 if (response.ok) {
                     messageDiv.innerHTML = '<div class="success-message">Flight berhasil diperbarui</div>';
                     fetchFlights();
-                    // Tutup form edit setelah 1 detik
                     setTimeout(closeEditForm, 1000);
                 } else {
                     let errorMsg = result.message || 'Gagal memperbarui flight';

@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// Jika kamu akan menggunakan Carbon untuk memformat tanggal di sini, jangan lupa import:
-// use Carbon\Carbon;
 
 class HotelController extends Controller
 {
-    // Method untuk menampilkan halaman daftar hotel
     public function index()
     {
-        // DATA DUMMY
         $hotels = [
             [
                 'id' => 1,
@@ -76,11 +72,6 @@ class HotelController extends Controller
                 ]
             ],
         ];
-
-        // Mengirim data hotels ke view 'hotel.blade.php'
         return view('hotel', ['hotels' => $hotels]);
     }
-
-    // Nanti kamu bisa tambahkan method lain di sini,
-    // misalnya untuk menyimpan pilihan hotel ke session atau database, dll.
 }

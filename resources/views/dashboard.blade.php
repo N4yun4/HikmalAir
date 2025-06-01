@@ -98,7 +98,8 @@
                                     </div>
                                     <div class="text-center mt-3 price-info">
                                         <div class="ticket-price fw-bold fs-5 text-danger mb-2">IDR {{ $ticket['price_display'] }}</div>
-                                        <a href="{{ route('tiket.deskripsi', ['id' => $ticket['id']]) }}" class="btn btn-sm btn-warning fw-bold w-100 btn-pilih- tiket-promo">Lihat Detail</a>
+                                        <!-- <a href="{{ route('tiket.deskripsi', ['id' => $ticket['id']]) }}" class="btn btn-sm btn-warning fw-bold w-100 btn-pilih- tiket-promo">Lihat Detail</a> -->
+                                         <a href="{{ route('pilihtiket') }}" class="btn btn-sm btn-warning fw-bold w-100 btn-pilih- tiket-promo">Lihat Detail</a>
                                     </div>
                                 </div>
                             </div>

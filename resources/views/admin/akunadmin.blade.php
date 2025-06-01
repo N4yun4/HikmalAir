@@ -21,7 +21,6 @@
             </a>
         </header>
 
-        <!-- Form untuk menambahkan admin -->
         <section class="form-section">
             <h2>Tambah Admin</h2>
             <form onsubmit="event.preventDefault(); addAdmin();">
@@ -33,7 +32,6 @@
             </form>
         </section>
 
-        <!-- Tabel Data Admin -->
         <section class="table-section">
             <h2>Data Admin</h2>
             <table>
@@ -53,7 +51,6 @@
             </table>
         </section>
 
-        <!-- Form Edit (Modal) -->
         <div id="overlay" class="overlay" style="display: none;" onclick="closeEditForm()"></div>
         <div id="editFormContainer" style="display: none;" class="form-section">
             <h2>Edit Admin</h2>

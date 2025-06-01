@@ -76,7 +76,7 @@
                 </div>
                 <div class="text-end mt-4 pt-3 border-top" id="totalSection" style="display: none;">
                     <h4>Total Makanan: <span id="totalOverallPrice" class="fw-bold">IDR 0</span></h4>
-                    <a class="btn confirm-summary-btn mt-2" href="{{ route('konfirmasi') }}">
+                    <a class="btn confirm-summary-btn mt-2" href="{{ route('booking.process') }}">
                         <i class="bi bi-check2-circle-fill me-1"></i> Konfirmasi Pilihan Makanan
                     </a>
                 </div>

@@ -14,7 +14,6 @@
     <div class="container py-5">
         <h2 class="mb-4 text-center">Dashboard Admin</h2>
         <div class="row justify-content-center">
-            <!-- Card Akun Admin -->
             <div class="col-md-4 mb-4">
                 <div class="card card-hover shadow text-center" onclick="location.href='{{ url('/admin/akunadmin') }}'">
                     <div class="card-body">
@@ -24,7 +23,6 @@
                 </div>
             </div>
 
-            <!-- Card Tiket Admin -->
             <div class="col-md-4 mb-4">
                 <div class="card card-hover shadow text-center" onclick="location.href='{{ url('/admin/tiketadmin') }}'">
                     <div class="card-body">

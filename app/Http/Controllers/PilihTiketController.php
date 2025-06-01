@@ -10,17 +10,14 @@ class PilihTiketController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil input pencarian
         $dari = $request->input('dari');
         $ke = $request->input('ke');
         $tanggalBerangkat = $request->input('tanggal_berangkat');
         $pulangPergi = $request->boolean('pulang_pergi');
         $tanggalPulang = $request->input('tanggal_pulang');
 
-        // Mulai query dari model Flight
         $flightsQuery = Flight::query();
 
-        // Terapkan filter berdasarkan input - PENCARIAN YANG LEBIH FLEKSIBEL
         if (!empty($dari)) {
             $flightsQuery->where(function($query) use ($dari) {
                 $query->where('departure_code', 'LIKE', '%' . strtoupper($dari) . '%')
@@ -39,15 +36,12 @@ class PilihTiketController extends Controller
             $flightsQuery->whereDate('date', $tanggalBerangkat);
         }
 
-        // Ambil hasil tiket yang sudah difilter
         $flights = $flightsQuery->get();
 
-        // Pencarian tiket pulang dengan logika yang sama
         $returnFlights = collect();
         if ($pulangPergi && !empty($tanggalPulang) && !empty($ke) && !empty($dari)) {
             $returnFlightsQuery = Flight::query();
 
-            // Untuk tiket pulang, balik dari dan ke
             $returnFlightsQuery->where(function($query) use ($ke) {
                 $query->where('departure_code', 'LIKE', '%' . strtoupper($ke) . '%')
                 ->orWhere('departure_city', 'LIKE', '%' . $ke . '%');

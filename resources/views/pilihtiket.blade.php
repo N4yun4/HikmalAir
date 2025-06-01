@@ -179,7 +179,6 @@
     <script src="{{ asset('js/searchpanel.js')}}"></script>
     <script src="{{ asset('js/pilihtiket.js')}}"></script>
     <script>
-        // Script untuk toggle Tanggal Pulang
         const returnTripSwitch = document.getElementById('returnTripSwitch');
         const returnDateContainer = document.getElementById('returnDateContainer');
         const returnDateInput = document.getElementById('returnDate');
@@ -187,20 +186,18 @@
         function toggleReturnDate() {
             if (returnTripSwitch.checked) {
                 returnDateContainer.style.display = 'block';
-                returnDateInput.setAttribute('required', 'required'); // Tanggal pulang jadi wajib
+                returnDateInput.setAttribute('required', 'required');
             } else {
                 returnDateContainer.style.display = 'none';
-                returnDateInput.removeAttribute('required'); // Tanggal pulang tidak wajib
-                returnDateInput.value = ''; // Kosongkan nilai saat dimatikan
+                returnDateInput.removeAttribute('required');
+                returnDateInput.value = '';
             }
         }
 
         returnTripSwitch.addEventListener('change', toggleReturnDate);
 
-        // Panggil saat halaman dimuat untuk menyesuaikan status awal
         toggleReturnDate();
 
-        // Script untuk swap lokasi (dari/ke)
         const swapLocationsButton = document.getElementById('swapLocationsButton');
         const departureCityInput = document.getElementById('departureCity');
         const arrivalCityInput = document.getElementById('arrivalCity');
@@ -211,21 +208,18 @@
             arrivalCityInput.value = temp;
         });
 
-        // Script untuk filter jam (ini butuh panggil kembali data atau filter di client-side)
         const filterButtons = document.querySelectorAll('.filter-btn');
-        const ticketItems = document.querySelectorAll('.ticket-item'); // Semua kartu tiket
+        const ticketItems = document.querySelectorAll('.ticket-item');
 
         filterButtons.forEach(button => {
             button.addEventListener('click', function() {
-                // Hapus 'active' dari semua tombol
                 filterButtons.forEach(btn => btn.classList.remove('active'));
-                // Tambahkan 'active' ke tombol yang diklik
                 this.classList.add('active');
 
                 const filterType = this.dataset.filter;
 
                 ticketItems.forEach(item => {
-                    const departureTimeStr = item.querySelector('.flight-time').textContent; // Ambil waktu keberangkatan
+                    const departureTimeStr = item.querySelector('.flight-time').textContent;
                     const [hours, minutes] = departureTimeStr.split(':').map(Number);
                     const departureHour = hours;
 
@@ -235,21 +229,21 @@
                         case 'semua':
                             showTicket = true;
                             break;
-                        case 'pagi': // 05:00 - 10:59
+                        case 'pagi':
                             showTicket = (departureHour >= 5 && departureHour < 11);
                             break;
-                        case 'siang': // 11:00 - 14:59
+                        case 'siang':
                             showTicket = (departureHour >= 11 && departureHour < 15);
                             break;
-                        case 'malam': // 18:00 - 23:59
+                        case 'malam':
                             showTicket = (departureHour >= 18 && departureHour < 24);
                             break;
                     }
 
                     if (showTicket) {
-                        item.style.display = ''; // Tampilkan
+                        item.style.display = '';
                     } else {
-                        item.style.display = 'none'; // Sembunyikan
+                        item.style.display = 'none';
                     }
                 });
             });

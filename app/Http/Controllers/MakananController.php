@@ -8,7 +8,6 @@ class MakananController extends Controller
 {
     public function index()
     {
-        // DATA DUMMY
         $daftarMakanan = [
             [
                 'id' => 'MK001',

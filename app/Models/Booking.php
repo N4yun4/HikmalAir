@@ -21,23 +21,24 @@ class Booking extends Model
         'payment_status',
         'payment_method',
         'booked_at',
+        'selected_makanan',
+        'selected_hotel'
     ];
 
     protected $casts = [
         'booked_at' => 'datetime',
         'total_price' => 'decimal:2',
+        'selected_makanan' => 'array',
+        'selected_hotel' => 'array'
     ];
 
-    // --- Relasi yang sudah Anda buat untuk user (jika ada) ---
     public function user()
     {
-        return $this->belongsTo(User::class); // Pastikan model User ada
+        return $this->belongsTo(User::class);
     }
 
-    // --- Tambahkan relasi ini ---
     public function flight()
     {
         return $this->belongsTo(Flight::class);
     }
-    // ---------------------------
 }

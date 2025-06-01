@@ -9,9 +9,6 @@ class Flight extends Model
 {
     use HasFactory;
 
-    // Nama tabel jika berbeda dengan konvensi (nama jamak dari model)
-    // Dalam kasus ini, model 'Flight' akan otomatis mencari tabel 'flights',
-    // jadi baris ini tidak wajib tapi bisa ditambahkan untuk kejelasan.
     protected $table = 'flights'; 
 
     /**

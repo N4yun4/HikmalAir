@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; // <-- Pastikan ini ada dan mengarah ke Model User Anda
-use Illuminate\Support\Facades\Hash; // <-- Pastikan ini ada untuk Hash::make()
-use Illuminate\Support\Facades\Auth; // <-- Pastikan ini ada untuk Auth::check()
-use Illuminate\Support\Facades\Session; // <-- Pastikan ini ada untuk Session::flash()
-use Illuminate\Support\Facades\Log; // <-- Tambahkan ini untuk Log::error()
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Log;
 
 class PageController extends Controller
 {
     public function login()
     {
-        // Jika user sudah login, arahkan ke dashboard
         if (Auth::check()) {
             return redirect()->route('dashboard');
         }
@@ -30,11 +29,11 @@ class PageController extends Controller
         $request->validate([
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
-            'email' => 'required|string|email|max:150|unique:login,email', // 'unique:nama_tabel,nama_kolom'
+            'email' => 'required|string|email|max:150|unique:login,email',
             'phone' => 'required|string|max:15',
-            'username' => 'required|string|max:100|unique:login,username', // 'unique:nama_tabel,nama_kolom'
+            'username' => 'required|string|max:100|unique:login,username',
             'password' => 'required|string|min:8|confirmed',
-            'terms' => 'accepted', // <-- Tambahkan validasi ini jika checkbox 'terms' wajib dicentang
+            'terms' => 'accepted',
         ], [
             'first_name.required' => 'Nama Depan wajib diisi.',
             'last_name.required' => 'Nama Belakang wajib diisi.',
@@ -47,7 +46,7 @@ class PageController extends Controller
             'password.required' => 'Password wajib diisi.',
             'password.min' => 'Password minimal 8 karakter.',
             'password.confirmed' => 'Konfirmasi password tidak cocok.',
-            'terms.accepted' => 'Anda harus menyetujui kebijakan kami untuk mendaftar.', // <-- Pesan error untuk checkbox
+            'terms.accepted' => 'Anda harus menyetujui kebijakan kami untuk mendaftar.',
         ]);
 
         try {
@@ -57,15 +56,11 @@ class PageController extends Controller
                 'email' => $request->email,
                 'phone' => $request->phone,
                 'username' => $request->username,
-                'password' => Hash::make($request->password), // Password di-hash untuk keamanan
-                // HAPUS BARIS INI: 'created_at' => now(), // Laravel akan otomatis mengisi created_at dan updated_at
+                'password' => Hash::make($request->password),
             ]);
 
-            // HAPUS BARIS INI: Auth::login($user); // TIDAK OTOMATIS LOGIN SETELAH REGISTRASI
-
-            // UBAH redirect ke halaman login
             Session::flash('success', 'Registrasi berhasil! Silakan login untuk melanjutkan.');
-            return redirect()->route('login'); // Redirect ke halaman login
+            return redirect()->route('login');
 
         } catch (\Exception $e) {
             Session::flash('error', 'Terjadi kesalahan saat registrasi. Silakan coba lagi.');

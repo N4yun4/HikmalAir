@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Booking; // Pastikan model Booking diimpor
-use App\Models\Flight;  // Pastikan model Flight diimpor
-use Illuminate\Support\Str; // Diperlukan untuk Str::random()
-use Illuminate\Support\Facades\Auth; // Diperlukan untuk Auth::id()
-use Carbon\Carbon; // Diperlukan untuk Carbon::now() atau format tanggal
+use App\Models\Booking;
+use App\Models\Flight;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -19,12 +19,16 @@ class BookingController extends Controller
      */
     public function processBooking(Request $request)
     {
-        // 1. Validasi Input Data Pemesan
         $validatedData = $request->validate([
-            'ticket_id' => 'required|exists:flights,id', // Pastikan ID tiket ada di tabel 'flights'
+            'ticket_id' => 'required|exists:flights,id',
             'contact_full_name' => 'required|string|max:255',
             'contact_email' => 'required|email|max:255',
             'contact_phone' => 'required|string|max:50',
+            'selected_makanan' => 'nullable|array',
+            'selected_makanan.*' => 'exists:makanan,id',
+            'selected_hotel' => 'nullable|array',
+            'selected_hotel.id' => 'nullable|exists:hotel,id',
+            'selected_hotel.room_type' => 'nullable|string'
         ], [
             'ticket_id.required' => 'ID tiket tidak ditemukan.',
             'ticket_id.exists' => 'Tiket yang Anda pilih tidak valid.',
@@ -34,31 +38,30 @@ class BookingController extends Controller
             'contact_phone.required' => 'Nomor telepon wajib diisi.',
         ]);
 
-        // 2. Ambil Detail Penerbangan untuk mendapatkan harga dan informasi lain
         $flight = Flight::findOrFail($validatedData['ticket_id']);
 
-        // 3. Buat Kode Pemesanan Unik
-        $bookingCode = 'HKM' . Str::upper(Str::random(7)); // Contoh: HKMABCDEFG
+        $bookingCode = 'HKM' . Str::upper(Str::random(7));
         while (Booking::where('booking_code', $bookingCode)->exists()) {
             $bookingCode = 'HKM' . Str::upper(Str::random(7));
         }
 
-        // 4. Simpan Data Pemesanan ke Database
         $booking = Booking::create([
-            'user_id' => Auth::id(), // Mengambil ID pengguna yang sedang login (akan NULL jika tidak login)
+            'user_id' => Auth::id(),
             'flight_id' => $flight->id,
             'booking_code' => $bookingCode,
             'passenger_full_name' => $validatedData['contact_full_name'],
             'passenger_email' => $validatedData['contact_email'],
             'passenger_phone' => $validatedData['contact_phone'],
-            'total_price' => $flight->price_int, // Menggunakan harga integer dari model Flight
-            'booking_status' => 'pending',        // Status awal pemesanan
-            'payment_status' => 'pending',        // Status awal pembayaran
-            'payment_method' => null,             // Metode pembayaran akan diisi setelah proses pembayaran, kita sudah set NULLABLE di DB
-            'booked_at' => now(),                 // Menggunakan waktu saat ini
+            'selected_meals' => $validatedData['selected_meals'] ?? null,
+            'selected_hotel' => $validatedData['selected_hotel'] ?? null,
+            'total_price' => $flight->price_int,
+            'booking_status' => 'pending',
+            'payment_status' => 'pending',
+            'payment_method' => null,
+            'booked_at' => now(),
+            
         ]);
 
-        // 5. Redirect ke Halaman Konfirmasi dengan data pemesanan
         return redirect()->route('booking.confirmation', ['booking_code' => $booking->booking_code])
                          ->with('success', 'Pemesanan Anda berhasil dibuat!');
     }
@@ -71,16 +74,13 @@ class BookingController extends Controller
      */
     public function confirmation($booking_code)
     {
-        // Temukan pemesanan berdasarkan kode booking dan eager load relasi 'flight'
         $booking = Booking::where('booking_code', $booking_code)->with('flight')->firstOrFail();
 
-        // Ambil data penerbangan dari objek booking.
         $flight = $booking->flight;
 
-        // Persiapkan variabel $selectedTicket berdasarkan data $flight
         $selectedTicket = [
             'airline_name' => $flight->airline_name,
-            'flight_number' => 'HA-' . $flight->id, // Ganti dengan $flight->flight_number jika ada di DB
+            'flight_number' => 'HA-' . $flight->id,
             'flight_class' => $flight->flight_class,
             'departure_city' => $flight->departure_city,
             'departure_code' => $flight->departure_code,
@@ -94,14 +94,12 @@ class BookingController extends Controller
             'price_int' => $flight->price_int,
         ];
 
-        // Persiapkan variabel $bookerDetails dari data $booking
         $bookerDetails = [
             'contact_full_name' => $booking->passenger_full_name,
             'contact_email' => $booking->passenger_email,
             'contact_phone' => $booking->passenger_phone,
         ];
 
-        // Siapkan data untuk add-ons (dummy atau dari DB jika sudah diimplementasikan)
         $addOnPrices = [
             'insurance' => 55000,
             'baggage' => [
@@ -112,17 +110,28 @@ class BookingController extends Controller
             ]
         ];
 
-        // Siapkan data untuk makanan dan hotel (dummy atau dari DB jika sudah diimplementasikan)
-        $selectedMealsDetails = null;
-        $selectedHotelDetails = null;
+        $selectedMakananDetails  = null;
+        if ($booking->selected_makanan) {
+            $selectedMakananDetails = Makanan::whereIn('id', $booking->selected_makanan)->get();
+        }
 
-        // Kirim semua variabel yang dibutuhkan ke view 'konfirmasi'.
+        $selectedHotelDetails = null;
+        if ($booking->selected_hotel && isset($booking->selected_hotel['id'])) {
+            $hotel = Hotel::find($booking->selected_hotel['id']);
+            if ($hotel) {
+                $selectedHotelDetails = [
+                    'hotel' => $hotel,
+                    'selected_room' => $booking->selected_hotel['room_type']
+                ];
+            }
+        }
+
         return view('konfirmasi', compact(
             'booking',
             'selectedTicket',
             'bookerDetails',
             'addOnPrices',
-            'selectedMealsDetails',
+            'selectedMakananDetails',
             'selectedHotelDetails'
         ));
     }

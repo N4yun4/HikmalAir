@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use Carbon\Carbon; // Aktifkan jika kamu perlu format tanggal di sini
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // DATA DUMMY
         $promoTickets = [
             [
                 'id' => 101,
@@ -71,28 +69,28 @@ class DashboardController extends Controller
                 'image' => 'images/jogja.jpg',
                 'tagline' => 'Jelajahi budaya Jawa yang kaya, candi-candi kuno, dan nikmati suasana kota yang hangat.',
                 'rating' => 4.8,
-                'link' => '#'
+                'link' => '/destinasi'
             ],
             [
                 'name' => 'Bali',
                 'image' => 'images/bali.jpg',
                 'tagline' => 'Nikmati keindahan pantai, sawah hijau, upacara adat, dan keramahan penduduk Bali.',
                 'rating' => 4.9,
-                'link' => '#'
+                'link' => '/destinasi'
             ],
             [
                 'name' => 'Bandung',
                 'image' => 'images/bandung.jpg',
                 'tagline' => 'Rasakan sejuknya udara pegunungan, nikmati kuliner kreatif, dan jelajahi factory outlet.',
                 'rating' => 4.6,
-                'link' => '#'
+                'link' => '/destinasi'
             ],
             [
                 'name' => 'Surabaya',
                 'image' => 'images/surabaya.jpg',
                 'tagline' => 'Kota Pahlawan dengan sejarah yang kaya, kuliner yang beragam, dan pusat bisnis yang dinamis.',
                 'rating' => 4.7,
-                'link' => '#'
+                'link' => '/destinasi'
             ],
         ];
 
