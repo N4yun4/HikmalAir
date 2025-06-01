@@ -45,11 +45,10 @@
 
                         <div class="row flight-details-grid align-items-center text-center">
                             <div class="col-md-4 location-info departure-info">
-                                <div class="time">{{ $ticket->departure_time }}</div> {{-- Format otomatis dari model --}}
+                                <div class="time">{{ $ticket->departure_time }}</div> 
                                 <div class="code">{{ $ticket->departure_code }}</div>
                                 <div class="city text-muted">{{ $ticket->departure_city }}</div>
-                                {{-- Jika ada kolom terminal di DB, bisa ditambahkan di sini --}}
-                                <div class="small text-muted mt-1">Terminal: T1 Domestik</div> {{-- Placeholder jika tidak ada di DB --}}
+                                <div class="small text-muted mt-1">Terminal: T1 Domestik</div>
                             </div>
                             <div class="col-md-4 duration-info my-3 my-md-0">
                                 <div><i class="bi bi-clock me-1"></i> {{ $ticket->duration }}</div>
@@ -57,46 +56,32 @@
                                 <div><i class="bi bi-signpost-split me-1"></i> {{ $ticket->transit_info }}</div>
                             </div>
                             <div class="col-md-4 location-info arrival-info">
-                                <div class="time">{{ $ticket->arrival_time }}</div> {{-- Format otomatis dari model --}}
+                                <div class="time">{{ $ticket->arrival_time }}</div> 
                                 <div class="code">{{ $ticket->arrival_code }}</div>
                                 <div class="city text-muted">{{ $ticket->arrival_city }}</div>
-                                {{-- Jika ada kolom terminal di DB, bisa ditambahkan di sini --}}
-                                <div class="small text-muted mt-1">Terminal: T3 Ultimate</div> {{-- Placeholder jika tidak ada di DB --}}
+                                <div class="small text-muted mt-1">Terminal: T3 Ultimate</div>
                             </div>
                         </div>
 
                         <hr class="my-3">
                         <p class="mb-1 small"><strong>Catatan Penerbangan:</strong></p>
-                        {{-- Ganti dengan deskripsi dari DB jika ada --}}
                         <p class="text-muted small mb-0">Tiket ini termasuk bagasi kabin 7kg.</p>
-                        {{-- Anda bisa menambahkan kolom 'notes' atau 'description' di tabel flights --}}
-
                         <hr class="my-3">
                         <p class="mb-1 small"><strong>Fasilitas standar:</strong></p>
                         <div>
-                            {{-- Anda bisa menambahkan kolom 'facilities' sebagai JSON atau text di DB
-                                 atau membuat relasi terpisah untuk fasilitas --}}
+
                             <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Kabin 7kg</span>
                             <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Pilihan Kursi</span>
-                            {{-- Contoh:
-                            @if($ticket->includes_meals)
-                                <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Makanan Gratis</span>
-                            @endif
-                            @if($ticket->has_wifi)
-                                <span class="badge text-bg-light border me-1 mb-1 py-2 px-2 fw-normal">Wi-Fi</span>
-                            @endif
-                            --}}
                         </div>
                     </div>
                 </div>
 
-                {{-- Form Data Pemesan --}}
                 <div class="card detail-card passenger-form-section mb-4">
                     <h5 class="card-header section-header">Isi Data Pemesan</h5>
                     <div class="card-body p-lg-4 p-3">
-                        <form id="bookingForm" action="{{ route('booking.process') }}" method="POST"> {{-- Anda perlu menentukan route untuk form ini --}}
-                            @csrf {{-- Penting untuk keamanan Laravel --}}
-                            <input type="hidden" name="ticket_id" value="{{ $ticket->id }}"> {{-- Mengirim ID tiket yang dipilih --}}
+                        <form id="bookingForm" action="{{ route('booking.process') }}" method="POST"> 
+                            @csrf 
+                            <input type="hidden" name="ticket_id" value="{{ $ticket->id }}"> 
                             <div class="mb-3">
                                 <label for="contactFullName" class="form-label">Nama Lengkap Pemesan <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-lg" id="contactFullName" name="contact_full_name" placeholder="Sesuai KTP/Paspor" required>
@@ -122,11 +107,11 @@
                         <dl class="price-details mb-3">
                             <div class="row">
                                 <dt class="col-sm-7">Harga Tiket (1 Dewasa)</dt>
-                                <dd class="col-sm-5 text-sm-end">IDR {{ $ticket->price_display }}</dd> {{-- Gunakan price_display dari DB --}}
+                                <dd class="col-sm-5 text-sm-end">IDR {{ $ticket->price_display }}</dd> 
                             </div>
                             <div class="row">
                                 <dt class="col-sm-7">Pajak & Biaya Lain</dt>
-                                <dd class="col-sm-5 text-sm-end text-success">Termasuk</dd> {{-- Ini masih statis, bisa dinamiskan jika ada kolom di DB --}}
+                                <dd class="col-sm-5 text-sm-end text-success">Termasuk</dd>
                             </div>
                         </dl>
                     <div class="d-grid mt-3">

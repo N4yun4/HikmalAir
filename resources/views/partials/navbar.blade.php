@@ -1,7 +1,5 @@
-{{-- Navbar Utama --}}
 <nav class="navbar navbar-expand-lg navbar-dark main-navbar-custom">
     <div class="container">
-        {{-- logo --}}
         <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
             <img src="{{ asset('images/logo.png') }}" alt="Logo HikmaAir" class="d-inline-block align-text-top me-2">
             <div style="border-left: 3px solid #ffffff; height: 25px"></div>
@@ -12,7 +10,6 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            {{-- Search Bar --}}
             <form class="d-flex ms-auto me-auto my-2 my-lg-0 search-form-custom" role="search">
                 <div class="input-group">
                     <span class="input-group-text bg-white border-end-0" id="searchIcon">
@@ -29,15 +26,14 @@
                             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
                             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
                         </svg>
-                        @auth {{-- Memastikan user sudah login sebelum menampilkan nama --}}
+                        @auth
                             <span>{{ Auth::user()->username }}</span>
-                        @else {{-- Jika belum login, tampilkan tombol login/daftar --}}
-                            <span>Guest</span> {{-- Atau bisa diganti dengan link Login/Register di sini --}}
+                        @else
+                            <span>Guest</span> 
                         @endauth
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownUserMenu">
-                        <!-- <li><a class="dropdown-item" href="#">Profil Saya</a></li>
-                        <li><a class="dropdown-item" href="#">Pengaturan Akun</a></li> -->
+
                         <li><a class="dropdown-item" href="/history">History Pemesanan</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>

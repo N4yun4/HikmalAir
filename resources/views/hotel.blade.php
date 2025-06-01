@@ -19,7 +19,6 @@
 
     <main class="pilihhhotel-main-content py-4">
         <div class="hotel-main-container">
-            {{-- Daftar Pilihan Hotel --}}
             <div class="hotel-list-container">
                 @if (isset($hotels) && count($hotels) > 0)
                     @foreach ($hotels as $hotel)
@@ -84,7 +83,6 @@
                 @endif
             </div>
 
-            {{-- Konfirmasi Pemesanan --}}
             <div class="order-summary-container">
                 <h3 class="title-section"><i class="bi bi-receipt-cutoff me-2"></i>Ringkasan Pemesanan Hotel Anda</h3>
                 <div id="hotelOrderSummaryList" class="mb-3">

@@ -11,11 +11,6 @@ class Flight extends Model
 
     protected $table = 'flights'; 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'airline_name',
         'departure_city',
@@ -32,15 +27,10 @@ class Flight extends Model
         'date',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
-        'departure_time' => 'datetime:H:i', // Cast sebagai waktu, format HH:MM
-        'arrival_time' => 'datetime:H:i',   // Cast sebagai waktu, format HH:MM
-        'date' => 'date',                  // Cast sebagai tanggal
+        'departure_time' => 'datetime:H:i',
+        'arrival_time' => 'datetime:H:i',  
+        'date' => 'date',                  
     ];
 
     public function bookings()

@@ -1,41 +1,33 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Ambil elemen-elemen interaktif
     const opsiPenjemputanSwitch = document.getElementById('opsiPenjemputanSwitch');
     const detailPenjemputanDiv = document.getElementById('detailPenjemputan');
     const tipeKendaraanSelect = document.getElementById('tipeKendaraanPenjemputan');
 
-    // Semua elemen form yang bisa mengubah harga (Asuransi, Bagasi, Switch Penjemputan, Tipe Kendaraan)
     const addonOptions = document.querySelectorAll('.addon-option');
 
-    // Elemen untuk menampilkan ringkasan harga
     const priceSummaryList = document.querySelector('.price-summary-list');
     const grandTotalText = document.getElementById('grandTotalText');
 
-    // Mengambil data harga dari variabel global yang di-inject Blade
     const baseTicketPrice = RIDEPOData.selectedTicketPrice;
-    const selectedHotel = RIDEPOData.selectedHotel;   // Bisa null atau objek hotel
-    const selectedMeals = RIDEPOData.selectedMeals; // Bisa null atau objek makanan
+    const selectedHotel = RIDEPOData.selectedHotel; 
+    const selectedMeals = RIDEPOData.selectedMeals; 
     const addOnPrices = RIDEPOData.addOnPrices;
 
-    // Fungsi untuk toggle tampilan detail penjemputan
     if (opsiPenjemputanSwitch && detailPenjemputanDiv) {
         opsiPenjemputanSwitch.addEventListener('change', function () {
             detailPenjemputanDiv.style.display = this.checked ? 'block' : 'none';
             if (!this.checked && tipeKendaraanSelect) {
-                tipeKendaraanSelect.value = "0"; // Reset pilihan kendaraan
+                tipeKendaraanSelect.value = "0"; 
             }
             updatePriceSummary();
         });
-        // Inisialisasi tampilan detail penjemputan
         detailPenjemputanDiv.style.display = opsiPenjemputanSwitch.checked ? 'block' : 'none';
     }
 
-    // Fungsi untuk memformat angka menjadi format mata uang IDR
     function formatCurrency(amount) {
         return 'IDR ' + parseInt(amount).toLocaleString('id-ID');
     }
 
-    // Fungsi untuk mengupdate ringkasan harga dan Grand Total
     function updatePriceSummary() {
         let currentTotal = baseTicketPrice;
         let summaryHTML = `
@@ -44,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 <dd>${formatCurrency(baseTicketPrice)}</dd>
             </div>`;
 
-        // Kalkulasi dan tampilkan Hotel jika ada
         if (selectedHotel && selectedHotel.price_int > 0) {
             currentTotal += selectedHotel.price_int;
             summaryHTML += `
@@ -54,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>`;
         }
 
-        // Kalkulasi dan tampilkan Makanan jika ada
         if (selectedMeals && selectedMeals.price_int > 0) {
             currentTotal += selectedMeals.price_int;
             summaryHTML += `
@@ -64,10 +54,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 </div>`;
         }
 
-        // Kalkulasi Asuransi
         const asuransiYa = document.getElementById('asuransiYa');
         if (asuransiYa && asuransiYa.checked) {
-            const insurancePrice = parseInt(asuransiYa.value); // value sudah harga
+            const insurancePrice = parseInt(asuransiYa.value);
             if (insurancePrice > 0) {
                 currentTotal += insurancePrice;
                 summaryHTML += `
@@ -78,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Kalkulasi Bagasi
         const opsiBagasiSelect = document.getElementById('opsiBagasi');
         if (opsiBagasiSelect && opsiBagasiSelect.value !== "0") {
             const baggagePrice = parseInt(opsiBagasiSelect.value);
@@ -94,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Kalkulasi Penjemputan
         if (opsiPenjemputanSwitch && opsiPenjemputanSwitch.checked && tipeKendaraanSelect && tipeKendaraanSelect.value !== "0") {
             const pickupPrice = parseInt(tipeKendaraanSelect.value);
             const selectedOption = tipeKendaraanSelect.options[tipeKendaraanSelect.selectedIndex];
@@ -109,23 +96,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
-        // Update daftar ringkasan di HTML
         if (priceSummaryList) {
             priceSummaryList.innerHTML = summaryHTML;
         }
 
-        // Update Grand Total di HTML
         if (grandTotalText) {
             grandTotalText.textContent = formatCurrency(currentTotal);
         }
     }
 
-    // Tambahkan event listener ke semua elemen yang bisa mengubah harga
     addonOptions.forEach(element => {
         element.addEventListener('change', updatePriceSummary);
     });
 
-    // Panggil updatePriceSummary sekali saat halaman dimuat untuk set nilai awal
-    // berdasarkan pilihan default dan data dari server (hotel, makanan)
     updatePriceSummary();
 });

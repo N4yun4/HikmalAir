@@ -14,7 +14,6 @@
     @include('partials.navbar')
 
     <div class="main-content-wrapper">
-        {{-- Hero Section --}}
         <section class="hero-section">
             <img src="{{ asset('images/dashboard-image.png') }}" alt="Background Pesawat" class="hero-background">
             <div class="container">
@@ -58,7 +57,6 @@
             </div>
         </section>
 
-        {{-- promo --}}
         <section class="content-section promo-tergacor-section">
             <div class="container">
                 <div class="row">

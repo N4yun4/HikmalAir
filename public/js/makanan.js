@@ -1,6 +1,4 @@
-// makanan.js
 document.addEventListener('DOMContentLoaded', function() {
-    // Simpan href asli tombol konfirmasi
     const confirmBtn = document.querySelector('.confirm-summary-btn');
     const originalHref = confirmBtn.getAttribute('href');
 
@@ -26,7 +24,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Inisialisasi ringkasan untuk item
         updateOrderSummary(foodId, price);
     });
 
@@ -83,7 +80,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (items.length > 0) {
             if (noSelectionMessage) noSelectionMessage.remove();
             totalSection.style.display = 'block';
-            // Aktifkan tombol konfirmasi
             confirmBtn.classList.remove('disabled');
             confirmBtn.setAttribute('href', originalHref);
         } else {
@@ -97,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             }
             totalSection.style.display = 'none';
-            // Nonaktifkan tombol konfirmasi
             confirmBtn.classList.add('disabled');
             confirmBtn.removeAttribute('href');
         }
