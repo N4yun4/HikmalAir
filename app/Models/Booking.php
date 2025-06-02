@@ -16,6 +16,7 @@ class Booking extends Model
         'passenger_full_name',
         'passenger_email',
         'passenger_phone',
+        'seat', // <--- TAMBAHKAN INI
         'total_price',
         'booking_status',
         'payment_status',
@@ -26,8 +27,9 @@ class Booking extends Model
     ];
 
     protected $casts = [
+        'seat' => 'array', // <--- TAMBAHKAN INI
         'booked_at' => 'datetime',
-        'total_price' => 'decimal:2',
+        'total_price' => 'decimal:2', // Pastikan kolom di DB juga DECIMAL atau FLOAT
         'selected_makanan' => 'array',
         'selected_hotel' => 'array'
     ];

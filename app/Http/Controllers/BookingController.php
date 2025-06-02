@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Flight;
+use App\Models\Makanan;
+use App\Models\Hotel;
+use App\Models\RoomType; // Pastikan model ini diimpor jika Anda berencana menggunakannya
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -12,23 +15,22 @@ use Carbon\Carbon;
 class BookingController extends Controller
 {
     /**
-     * Proses pengiriman form pemesanan tiket.
+     * Menampilkan halaman pemilihan kursi.
+     * Menerima data dari form deskripsi tiket (GET request).
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function processBooking(Request $request)
+    public function showSeatSelection(Request $request)
     {
         $validatedData = $request->validate([
             'ticket_id' => 'required|exists:flights,id',
             'contact_full_name' => 'required|string|max:255',
             'contact_email' => 'required|email|max:255',
             'contact_phone' => 'required|string|max:50',
-            'selected_makanan' => 'nullable|array',
-            'selected_makanan.*' => 'exists:makanan,id',
-            'selected_hotel' => 'nullable|array',
-            'selected_hotel.id' => 'nullable|exists:hotel,id',
-            'selected_hotel.room_type' => 'nullable|string'
+            // Ini akan menerima JSON string, biarkan tetap string
+            'selected_makanan' => 'nullable|json',
+            'selected_hotel' => 'nullable|json',
         ], [
             'ticket_id.required' => 'ID tiket tidak ditemukan.',
             'ticket_id.exists' => 'Tiket yang Anda pilih tidak valid.',
@@ -40,10 +42,70 @@ class BookingController extends Controller
 
         $flight = Flight::findOrFail($validatedData['ticket_id']);
 
+        // --- PERBAIKAN DI SINI ---
+        // Biarkan 'selected_makanan' dan 'selected_hotel' tetap sebagai JSON string
+        // karena mereka akan diteruskan ke input hidden di form seat.blade.php
+        // agar tetap valid JSON saat kembali ke processBooking.
+        $selectedMakananJson = $validatedData['selected_makanan'] ?? '[]';
+        $selectedHotelJson = $validatedData['selected_hotel'] ?? '[]';
+        // --- AKHIR PERBAIKAN ---
+
+        return view('seat', [
+            'ticket' => $flight,
+            'contact_full_name' => $validatedData['contact_full_name'],
+            'contact_email' => $validatedData['contact_email'],
+            'contact_phone' => $validatedData['contact_phone'],
+            'selected_makanan' => $selectedMakananJson, // Teruskan sebagai JSON string
+            'selected_hotel' => $selectedHotelJson,     // Teruskan sebagai JSON string
+        ]);
+    }
+
+    /**
+     * Memproses pemesanan akhir setelah pemilihan kursi.
+     * Metode ini sekarang akan menerima 'selected_seats' dari form.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function processBooking(Request $request)
+    {
+        //dd($request->all());
+        // Debugging: Lihat semua data yang datang dari form
+        // dd($request->all());
+
+        $validatedData = $request->validate([
+            'ticket_id' => 'required|exists:flights,id',
+            'contact_full_name' => 'required|string|max:255',
+            'contact_email' => 'required|email|max:255',
+            'contact_phone' => 'required|string|max:50',
+            'selected_seats' => 'required|json', // Masih menerima 'selected_seats' dari form frontend
+            'selected_makanan' => 'nullable|json',
+            'selected_hotel' => 'nullable|json',
+        ], [
+            'ticket_id.required' => 'ID tiket tidak ditemukan.',
+            'ticket_id.exists' => 'Tiket yang Anda pilih tidak valid.',
+            'contact_full_name.required' => 'Nama lengkap pemesan wajib diisi.',
+            'contact_email.required' => 'Alamat email wajib diisi.',
+            'contact_email.email' => 'Format alamat email tidak valid.',
+            'contact_phone.required' => 'Nomor telepon wajib diisi.',
+            'selected_seats.required' => 'Mohon pilih setidaknya satu kursi.',
+            'selected_seats.json' => 'Format kursi yang dipilih tidak valid.'
+        ]);
+
+        $flight = Flight::findOrFail($validatedData['ticket_id']);
+
         $bookingCode = 'HKM' . Str::upper(Str::random(7));
         while (Booking::where('booking_code', $bookingCode)->exists()) {
             $bookingCode = 'HKM' . Str::upper(Str::random(7));
         }
+
+        // Dekode JSON string dari request menjadi array PHP
+        // Ini tetap diperlukan karena validator 'json' hanya memvalidasi, tidak mengkonversi
+        $selectedSeats = json_decode($validatedData['selected_seats'], true);
+        $selectedMakanan = json_decode($validatedData['selected_makanan'] ?? '[]', true);
+        $selectedHotel = json_decode($validatedData['selected_hotel'] ?? '[]', true);
+
+        $totalPrice = $flight->price_int;
 
         $booking = Booking::create([
             'user_id' => Auth::id(),
@@ -52,24 +114,24 @@ class BookingController extends Controller
             'passenger_full_name' => $validatedData['contact_full_name'],
             'passenger_email' => $validatedData['contact_email'],
             'passenger_phone' => $validatedData['contact_phone'],
-            'selected_meals' => $validatedData['selected_meals'] ?? null,
-            'selected_hotel' => $validatedData['selected_hotel'] ?? null,
-            'total_price' => $flight->price_int,
+            'seat' => $selectedSeats, // Laravel akan otomatis meng-encode ini ke JSON karena 'array' cast di model
+            'selected_meals' => $selectedMakanan, // Laravel akan otomatis meng-encode ini ke JSON karena 'array' cast di model
+            'selected_hotel' => $selectedHotel, // Laravel akan otomatis meng-encode ini ke JSON karena 'array' cast di model
+            'total_price' => $totalPrice,
             'booking_status' => 'pending',
             'payment_status' => 'pending',
             'payment_method' => null,
             'booked_at' => now(),
-            
         ]);
 
         return redirect()->route('booking.confirmation', ['booking_code' => $booking->booking_code])
-                         ->with('success', 'Pemesanan Anda berhasil dibuat!');
+                            ->with('success', 'Pemesanan Anda berhasil dibuat!');
     }
 
     /**
      * Menampilkan halaman konfirmasi pemesanan.
      *
-     * @param  string  $booking_code
+     * @param string $booking_code
      * @return \Illuminate\Http\Response
      */
     public function confirmation($booking_code)
@@ -77,6 +139,11 @@ class BookingController extends Controller
         $booking = Booking::where('booking_code', $booking_code)->with('flight')->firstOrFail();
 
         $flight = $booking->flight;
+
+        // Mendapatkan data langsung sebagai array dari model karena 'array' cast di Booking.php
+        $selectedSeats = $booking->seat;
+        $selectedMeals = $booking->selected_meals;
+        $selectedHotel = $booking->selected_hotel;
 
         $selectedTicket = [
             'airline_name' => $flight->airline_name,
@@ -110,18 +177,19 @@ class BookingController extends Controller
             ]
         ];
 
-        $selectedMakananDetails  = null;
-        if ($booking->selected_makanan) {
-            $selectedMakananDetails = Makanan::whereIn('id', $booking->selected_makanan)->get();
+        $selectedMakananDetails = null;
+        if (!empty($selectedMeals) && is_array($selectedMeals)) {
+            $selectedMakananDetails = Makanan::whereIn('id', $selectedMeals)->get();
         }
 
         $selectedHotelDetails = null;
-        if ($booking->selected_hotel && isset($booking->selected_hotel['id'])) {
-            $hotel = Hotel::find($booking->selected_hotel['id']);
+        // Pastikan $selectedHotel adalah array dan memiliki kunci 'id'
+        if (!empty($selectedHotel) && is_array($selectedHotel) && isset($selectedHotel['id'])) {
+            $hotel = Hotel::find($selectedHotel['id']);
             if ($hotel) {
                 $selectedHotelDetails = [
                     'hotel' => $hotel,
-                    'selected_room' => $booking->selected_hotel['room_type']
+                    'selected_room' => $selectedHotel['room_type'] ?? 'Tidak Spesifik'
                 ];
             }
         }
@@ -132,7 +200,8 @@ class BookingController extends Controller
             'bookerDetails',
             'addOnPrices',
             'selectedMakananDetails',
-            'selectedHotelDetails'
+            'selectedHotelDetails',
+            'selectedSeats'
         ));
     }
 }
