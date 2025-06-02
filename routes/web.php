@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
 
     // Route untuk menyimpan makanan sementara
     Route::post('/simpan-makanan', [MakananController::class, 'simpanSementara'])->name('makanan.simpan');
+    Route::delete('/booking/{booking_code}/hapus-makanan', [BookingController::class, 'hapusMakanan'])->name('booking.hapus.makanan');
 });
 
 // ADMIN

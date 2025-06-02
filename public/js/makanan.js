@@ -24,7 +24,21 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        updateOrderSummary(foodId, price);
+        document.getElementById('orderSummaryList').addEventListener('click', function(e) {
+        if (e.target.classList.contains('remove-meal-btn')) {
+            const mealId = e.target.dataset.mealId;
+            const mealCard = document.querySelector(`.meal-card[data-id="${mealId}"]`);
+
+            if (mealCard) {
+                const quantityInput = mealCard.querySelector('.quantity-input');
+                quantityInput.value = 0;
+
+                // Update form dan ringkasan
+                updateSelectedMealsForm();
+                updateOrderSummary();
+            }
+        }
+    });
     });
 
     function updateOrderSummary(foodId, itemPrice) {
@@ -114,5 +128,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }).format(total);
 
         document.getElementById('totalOverallPrice').textContent = formattedTotal;
+    }
+
+    function updateOrderSummary() {
+        Object.entries(selectedMeals).forEach(([mealId, quantity]) => {
+            mealElement.innerHTML = `
+                <div>
+                    <span class="fw-medium">${mealName}</span>
+                    <span class="text-muted">x${quantity}</span>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span>IDR ${mealTotal.toLocaleString('id-ID')}</span>
+                    <button type="button" class="btn btn-sm btn-link text-danger remove-meal-btn"
+                            data-meal-id="${mealId}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            `;
+        });
     }
 });

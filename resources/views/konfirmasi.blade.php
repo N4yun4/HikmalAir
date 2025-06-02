@@ -103,13 +103,28 @@
                                 <h6 class="mb-2">Pesanan Makanan Anda:</h6>
                                 <ul>
                                     @foreach ($selectedMealsDetails as $makananItem)
-                                        <li>{{ $makananItem->name }} - IDR {{ number_format($makananItem->price, 0, ',', '.') }}</li>
+                                        <li>
+                                            {{ $makananItem->name }} -
+                                            IDR {{ number_format($makananItem->price, 0, ',', '.') }}
+                                        </li>
                                     @endforeach
                                 </ul>
-                                <a href="{{ route('makanan.index', ['booking_code' => $booking->booking_code]) }}"
-                                class="btn btn-sm btn-outline-secondary mt-2">
-                                    <i class="bi bi-pencil-square me-1"></i> Ubah Pilihan Makanan
-                                </a>
+                                <p class="fw-semibold">
+                                    Subtotal Makanan: IDR {{ number_format($totalMakanan, 0, ',', '.') }}
+                                </p>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ route('makanan.index', ['booking_code' => $booking->booking_code]) }}"
+                                    class="btn btn-sm btn-outline-secondary mt-2">
+                                        <i class="bi bi-pencil-square me-1"></i> Ubah Pilihan Makanan
+                                    </a>
+                                    <form action="{{ route('booking.hapus.makanan', ['booking_code' => $booking->booking_code]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-outline-danger mt-2">
+                                            <i class="bi bi-trash me-1"></i> Hapus Pesanan
+                                        </button>
+                                    </form>
+                                </div>
                             @else
                                 <p class="mb-2">Anda belum memilih makanan atau minuman.</p>
                                 <a href="{{ route('makanan.index', ['booking_code' => $booking->booking_code]) }}"

@@ -344,4 +344,20 @@ class BookingController extends Controller
 
         return back()->with('error', 'Booking tidak ditemukan!');
     }
+
+    public function hapusMakanan($booking_code)
+    {
+        $booking = Booking::where('booking_code', $booking_code)->first();
+
+        if (!$booking) {
+            return redirect()->back()->with('error', 'Booking tidak ditemukan!');
+        }
+
+        // Set selected_meals menjadi array kosong
+        $booking->selected_meals = [];
+        $booking->save();
+
+        return redirect()->route('booking.confirmation', ['booking_code' => $booking->booking_code])
+                        ->with('success', 'Pesanan makanan berhasil dihapus!');
+    }
 }
