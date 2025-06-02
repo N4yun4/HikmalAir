@@ -9,15 +9,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const grandTotalText = document.getElementById('grandTotalText');
 
     const baseTicketPrice = RIDEPOData.selectedTicketPrice;
-    const selectedHotel = RIDEPOData.selectedHotel; 
-    const selectedMeals = RIDEPOData.selectedMeals; 
+    const selectedHotel = RIDEPOData.selectedHotel;
+    const selectedMeals = RIDEPOData.selectedMeals;
     const addOnPrices = RIDEPOData.addOnPrices;
+
+    let totalMealPrice = 0;
+    if (selectedMeals && Array.isArray(selectedMeals)) {
+        totalMealPrice = selectedMeals.reduce((total, meal) => total + Number(meal.price), 0);
+    }
 
     if (opsiPenjemputanSwitch && detailPenjemputanDiv) {
         opsiPenjemputanSwitch.addEventListener('change', function () {
             detailPenjemputanDiv.style.display = this.checked ? 'block' : 'none';
             if (!this.checked && tipeKendaraanSelect) {
-                tipeKendaraanSelect.value = "0"; 
+                tipeKendaraanSelect.value = "0";
             }
             updatePriceSummary();
         });
@@ -25,38 +30,42 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function formatCurrency(amount) {
-        return 'IDR ' + parseInt(amount).toLocaleString('id-ID');
+        return 'IDR ' + parseInt(amount).toLocaleString('id-ID', {
+            maximumFractionDigits: 0
+        });
     }
 
     function updatePriceSummary() {
-        let currentTotal = baseTicketPrice;
+        let currentTotal = Number(baseTicketPrice) + Number(totalMealPrice);
         let summaryHTML = `
             <div class="d-flex justify-content-between">
-                <dt>Harga Tiket (${RIDEPOData.selectedTicket ? RIDEPOData.selectedTicket.airline_name : 'Maskapai'})</dt>
+                <dt>Harga Tiket</dt>
                 <dd>${formatCurrency(baseTicketPrice)}</dd>
             </div>`;
 
-        if (selectedHotel && selectedHotel.price_int > 0) {
-            currentTotal += selectedHotel.price_int;
-            summaryHTML += `
-                <div class="d-flex justify-content-between">
-                    <dt>Hotel (${selectedHotel.name})</dt>
-                    <dd>${formatCurrency(selectedHotel.price_int)}</dd>
-                </div>`;
-        }
-
-        if (selectedMeals && selectedMeals.price_int > 0) {
-            currentTotal += selectedMeals.price_int;
+        // Tambahkan makanan
+        if (totalMealPrice > 0) {
             summaryHTML += `
                 <div class="d-flex justify-content-between">
                     <dt>Makanan & Minuman</dt>
-                    <dd>${formatCurrency(selectedMeals.price_int)}</dd>
+                    <dd>${formatCurrency(totalMealPrice)}</dd>
                 </div>`;
         }
 
+        // Tambahkan hotel jika ada
+        if (selectedHotel && selectedHotel.hotel && selectedHotel.price) {
+            currentTotal += Number(selectedHotel.price);
+            summaryHTML += `
+                <div class="d-flex justify-content-between">
+                    <dt>Hotel (${selectedHotel.hotel.name})</dt>
+                    <dd>${formatCurrency(selectedHotel.price)}</dd>
+                </div>`;
+        }
+
+        // Asuransi
         const asuransiYa = document.getElementById('asuransiYa');
         if (asuransiYa && asuransiYa.checked) {
-            const insurancePrice = parseInt(asuransiYa.value);
+            const insurancePrice = Number(asuransiYa.value);
             if (insurancePrice > 0) {
                 currentTotal += insurancePrice;
                 summaryHTML += `
@@ -67,9 +76,10 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
+        // Bagasi
         const opsiBagasiSelect = document.getElementById('opsiBagasi');
         if (opsiBagasiSelect && opsiBagasiSelect.value !== "0") {
-            const baggagePrice = parseInt(opsiBagasiSelect.value);
+            const baggagePrice = Number(opsiBagasiSelect.value);
             const selectedOption = opsiBagasiSelect.options[opsiBagasiSelect.selectedIndex];
             const baggageWeight = selectedOption.dataset.weight;
             if (baggagePrice > 0) {
@@ -82,8 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
+        // Penjemputan
         if (opsiPenjemputanSwitch && opsiPenjemputanSwitch.checked && tipeKendaraanSelect && tipeKendaraanSelect.value !== "0") {
-            const pickupPrice = parseInt(tipeKendaraanSelect.value);
+            const pickupPrice = Number(tipeKendaraanSelect.value);
             const selectedOption = tipeKendaraanSelect.options[tipeKendaraanSelect.selectedIndex];
             const vehicleType = selectedOption.dataset.type;
             if (pickupPrice > 0) {

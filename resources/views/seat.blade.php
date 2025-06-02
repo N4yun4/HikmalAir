@@ -15,14 +15,12 @@
         @include('partials.navbar')
 
         <div class="main-content">
-            <form id="seatSelectionForm" action="{{ route('booking.processBooking') }}" method="POST">
+            <form id="seatSelectionForm" action="{{ route('booking.finalize') }}" method="POST">
                 @csrf
-                {{-- Bidang tersembunyi untuk meneruskan data sebelumnya --}}
                 <input type="hidden" name="ticket_id" value="{{ request('ticket_id') }}">
                 <input type="hidden" name="contact_full_name" value="{{ request('contact_full_name') }}">
                 <input type="hidden" name="contact_email" value="{{ request('contact_email') }}">
                 <input type="hidden" name="contact_phone" value="{{ request('contact_phone') }}">
-                {{-- Ini akan menyimpan kursi yang dipilih --}}
                 <input type="hidden" name="selected_makanan" value="{{ $selected_makanan ?? '[]' }}">
                 <input type="hidden" name="selected_hotel" value="{{ $selected_hotel ?? '[]' }}">
                 <input type="hidden" name="selected_seats" id="selectedSeatsInput">
@@ -61,43 +59,23 @@
         <script src="{{ asset('js/navbar.js') }}"></script>
         <script src="{{ asset('js/seat.js')}}"></script>
         <script>
-            // Pastikan kode seat.js selesai dijalankan sebelum ini
-            // Tambahkan delay sedikit jika perlu, atau pastikan script tagnya di defer/async
-        
-            // Tambahkan console.log di sini untuk melihat elemen kursi yang ada
-            console.log("Semua elemen dengan class 'seat':", document.querySelectorAll('.seat'));
-        
             document.querySelector('.confirm-btn').addEventListener('click', function(event) {
-                // event.preventDefault(); // Hentikan submit form sementara untuk debugging
-        
-                let selectedSeats = [];
-                let seatElements = document.querySelectorAll('.seat.selected');
-        
-                console.log("Elemen kursi yang dipilih (.seat.selected):", seatElements);
-        
-                if (seatElements.length === 0) {
-                    console.warn("Tidak ada kursi dengan class 'seat selected' ditemukan.");
-                }
-        
-                seatElements.forEach(function(seatElement) {
-                    let seatId = seatElement.dataset.seatCode;
-                    if (seatId) {
-                        selectedSeats.push(seatId);
-                    } else {
-                        console.error("Elemen kursi tidak memiliki data-seat-id:", seatElement);
-                    }
+                const selectedSeats = [];
+                const seatElements = document.querySelectorAll('.seat.selected');
+
+                seatElements.forEach(function(seat) {
+                    selectedSeats.push(seat.dataset.seatCode);
                 });
-        
-                console.log("Kursi yang terkumpul (selectedSeats array):", selectedSeats);
-        
-                let selectedSeatsInput = document.getElementById('selectedSeatsInput');
-                selectedSeatsInput.value = JSON.stringify(selectedSeats);
-        
-                console.log("Nilai input tersembunyi #selectedSeatsInput:", selectedSeatsInput.value);
-        
-                // Jika Anda menggunakan event.preventDefault() di atas, hapus baris di bawah ini
-                // jika Anda ingin form tetap disubmit setelah debugging.
-                // document.getElementById('seatSelectionForm').submit();
+
+                console.log("Elemen kursi yang dipilih (.seat.selected):", selectedSeats);
+
+                if (selectedSeats.length === 0) {
+                    event.preventDefault();
+                    alert('Silakan pilih setidaknya satu kursi sebelum melanjutkan.');
+                    return;
+                }
+
+                document.getElementById('selectedSeatsInput').value = JSON.stringify(selectedSeats);
             });
         </script>
     </body>

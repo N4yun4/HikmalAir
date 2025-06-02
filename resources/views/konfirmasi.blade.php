@@ -99,24 +99,22 @@
                             <i class="bi bi-cup-straw me-2"></i>Makanan & Minuman di Pesawat
                         </div>
                         <div class="card-body">
-                            {{-- PERBAIKAN: Menggunakan $selectedMakananDetails --}}
-                            @if (!empty($selectedMakananDetails))
+                            @if (!empty($selectedMealsDetails))
                                 <h6 class="mb-2">Pesanan Makanan Anda:</h6>
                                 <ul>
-                                    {{-- Iterasi langsung $selectedMakananDetails yang sudah berupa koleksi Makanan --}}
-                                    @foreach ($selectedMakananDetails as $makananItem)
+                                    @foreach ($selectedMealsDetails as $makananItem)
                                         <li>{{ $makananItem->name }} - IDR {{ number_format($makananItem->price, 0, ',', '.') }}</li>
                                     @endforeach
                                 </ul>
-                                {{-- Jika Anda memiliki total harga untuk makanan, Anda perlu menghitungnya di controller dan meneruskannya --}}
-                                {{-- <p><strong>Subtotal Makanan: IDR {{ $selectedMealsDetails['price_display'] }}</strong></p> --}}
-                                <a href="{{ route('makanan.index') }}" class="btn btn-sm btn-outline-secondary mt-2">
+                                <a href="{{ route('makanan.index', ['booking_code' => $booking->booking_code]) }}"
+                                class="btn btn-sm btn-outline-secondary mt-2">
                                     <i class="bi bi-pencil-square me-1"></i> Ubah Pilihan Makanan
                                 </a>
                             @else
                                 <p class="mb-2">Anda belum memilih makanan atau minuman.</p>
-                                <a href="{{ route('makanan.index') }}" class="btn btn-outline-primary">
-                                    Pilih Makanan & Minuman <i class="bi bi-arrow-right-short"></i>
+                                <a href="{{ route('makanan.index', ['booking_code' => $booking->booking_code]) }}"
+                                class="btn btn-outline-primary">
+                                    <i class="bi bi-cup-straw me-1"></i> Pilih Makanan dan Minuman
                                 </a>
                             @endif
                         </div>
@@ -128,7 +126,6 @@
                             <i class="bi bi-bag-heart me-2"></i>Merchandise Eksklusif dari HikmalAir
                         </div>
                         <div class="card-body">
-                            {{-- Perhatikan: $selectedMerchDetails belum dikirim dari controller Anda --}}
                             @if (!empty($selectedMerchDetails) && !empty($selectedMerchDetails['items']))
                                 <h6 class="mb-2">Merchandise Pilihan Anda:</h6>
                                 <ul>
@@ -155,20 +152,10 @@
                             <i class="bi bi-building-check me-2"></i>Akomodasi Hotel
                         </div>
                         <div class="card-body">
-                            {{-- PERBAIKAN: Mengakses struktur $selectedHotelDetails yang benar --}}
                             @if ($selectedHotelDetails)
                                 <h6 class="mb-2">Hotel yang Anda Pilih:</h6>
                                 <p class="mb-1"><strong>{{ $selectedHotelDetails['hotel']['name'] ?? 'Nama Hotel Tidak Ditemukan' }}</strong></p>
                                 <p class="mb-1 text-muted small">Kamar: {{ $selectedHotelDetails['selected_room'] ?? 'Tipe Kamar Tidak Ditemukan' }}</p>
-                                {{-- Perhatikan: check_in, check_out, duration, price_display tidak ada di selectedHotelDetails dari controller Anda --}}
-                                {{-- Jika Anda ingin menampilkan ini, Anda harus menambahkannya di controller saat mengisi $selectedHotelDetails --}}
-                                {{-- Contoh: --}}
-                                {{-- <p class="mb-1 text-muted small">
-                                    Check-in: {{ Carbon\Carbon::parse($selectedHotelDetails['check_in_date'])->translatedFormat('D, d M Y') ?? 'N/A' }} <br>
-                                    Check-out: {{ Carbon\Carbon::parse($selectedHotelDetails['check_out_date'])->translatedFormat('D, d M Y') ?? 'N/A' }}
-                                    ({{ $selectedHotelDetails['duration_nights'] ?? 'N/A' }} malam)
-                                </p> --}}
-                                {{-- <p class="mb-2"><strong>Harga Hotel:</strong> IDR {{ number_format($selectedHotelDetails['price_per_night'] ?? 0, 0, ',', '.') }}</p> --}}
                                 <a href="{{ route('hotel') }}" class="btn btn-sm btn-outline-secondary mt-2">
                                     <i class="bi bi-pencil-square me-1"></i> Ubah Pilihan Hotel
                                 </a>
@@ -216,11 +203,20 @@
                                     <dt>Harga Tiket ({{ $selectedTicket['airline_name'] }})</dt>
                                     <dd>IDR {{ $selectedTicket['price_display'] }}</dd>
                                 </div>
+                                @if($totalMakanan > 0)
+                                <div class="d-flex justify-content-between">
+                                    <dt>Makanan & Minuman</dt>
+                                    <dd>IDR {{ number_format($totalMakanan, 0, ',', '.') }}</dd>
+                                </div>
+                                @endif
+                                <!-- Tambahkan bagian lain jika ada (asuransi, bagasi, dll) -->
                             </dl>
                             <hr>
                             <div class="d-flex justify-content-between align-items-center grand-total">
                                 <h4 class="mb-0">Total Pembayaran</h4>
-                                <h4 class="mb-0 fw-bold text-danger" id="grandTotalText">IDR {{ $selectedTicket['price_display'] }}</h4>
+                                <h4 class="mb-0 fw-bold text-danger" id="grandTotalText">
+                                    IDR {{ number_format($totalPembayaran, 0, ',', '.') }}
+                                </h4>
                             </div>
                             <div class="d-grid mt-4">
                                 <button type="button" class="btn btn-success btn-lg fw-bold pay-now-btn" id="payNowButton">
@@ -229,7 +225,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -261,9 +256,8 @@
     <script>
         const RIDEPOData = {
             selectedTicketPrice: {{ $selectedTicket['price_int'] ?? 0 }},
-            // PERBAIKAN: Kirim $selectedHotelDetails dan $selectedMakananDetails apa adanya (sudah JSON string)
             selectedHotel: @json($selectedHotelDetails),
-            selectedMeals: @json($selectedMakananDetails), // <-- Perbaikan nama variabel di sini
+            selectedMeals: @json($selectedMealsDetails),
             addOnPrices: @json($addOnPrices)
         };
 
@@ -281,7 +275,6 @@
 
         const modalElement = document.getElementById('paymentSuccessModal');
         modalElement.addEventListener('hidden.bs.modal', function () {
-            // Anda bisa tambahkan logika di sini jika modal disembunyikan
         });
     </script>
 </body>

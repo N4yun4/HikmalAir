@@ -45,7 +45,7 @@
 
                         <div class="row flight-details-grid align-items-center text-center">
                             <div class="col-md-4 location-info departure-info">
-                                <div class="time">{{ $ticket->departure_time }}</div> 
+                                <div class="time">{{ $ticket->departure_time }}</div>
                                 <div class="code">{{ $ticket->departure_code }}</div>
                                 <div class="city text-muted">{{ $ticket->departure_city }}</div>
                                 <div class="small text-muted mt-1">Terminal: T1 Domestik</div>
@@ -56,7 +56,7 @@
                                 <div><i class="bi bi-signpost-split me-1"></i> {{ $ticket->transit_info }}</div>
                             </div>
                             <div class="col-md-4 location-info arrival-info">
-                                <div class="time">{{ $ticket->arrival_time }}</div> 
+                                <div class="time">{{ $ticket->arrival_time }}</div>
                                 <div class="code">{{ $ticket->arrival_code }}</div>
                                 <div class="city text-muted">{{ $ticket->arrival_city }}</div>
                                 <div class="small text-muted mt-1">Terminal: T3 Ultimate</div>
@@ -79,9 +79,9 @@
                 <div class="card detail-card passenger-form-section mb-4">
                     <h5 class="card-header section-header">Isi Data Pemesan</h5>
                     <div class="card-body p-lg-4 p-3">
-                        <form id="bookingForm" action="{{ route('booking.process') }}" method="POST"> 
-                            @csrf 
-                            <input type="hidden" name="ticket_id" value="{{ $ticket->id }}"> 
+                        <form id="bookingForm" action="{{ route('booking.process') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
                             <div class="mb-3">
                                 <label for="contactFullName" class="form-label">Nama Lengkap Pemesan <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control form-control-lg" id="contactFullName" name="contact_full_name" placeholder="Sesuai KTP/Paspor" required>
@@ -107,7 +107,7 @@
                         <dl class="price-details mb-3">
                             <div class="row">
                                 <dt class="col-sm-7">Harga Tiket (1 Dewasa)</dt>
-                                <dd class="col-sm-5 text-sm-end">IDR {{ $ticket->price_display }}</dd> 
+                                <dd class="col-sm-5 text-sm-end">IDR {{ $ticket->price_display }}</dd>
                             </div>
                             <div class="row">
                                 <dt class="col-sm-7">Pajak & Biaya Lain</dt>

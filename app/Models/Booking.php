@@ -16,23 +16,30 @@ class Booking extends Model
         'passenger_full_name',
         'passenger_email',
         'passenger_phone',
-        'seat', // <--- TAMBAHKAN INI
+        'seat',
         'total_price',
         'booking_status',
         'payment_status',
         'payment_method',
         'booked_at',
         'selected_makanan',
-        'selected_hotel'
+        'selected_hotel',
+        'selected_meals'
     ];
 
     protected $casts = [
-        'seat' => 'array', // <--- TAMBAHKAN INI
+        'seat' => 'array',
         'booked_at' => 'datetime',
-        'total_price' => 'decimal:2', // Pastikan kolom di DB juga DECIMAL atau FLOAT
+        'total_price' => 'decimal:2',
         'selected_makanan' => 'array',
-        'selected_hotel' => 'array'
+        'selected_hotel' => 'array',
+        'selected_meals' => 'array'
     ];
+
+    public function meals()
+    {
+        return $this->belongsToMany(Makanan::class, 'booking_makanan', 'booking_id', 'makanan_id');
+    }
 
     public function user()
     {

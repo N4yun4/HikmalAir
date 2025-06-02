@@ -91,7 +91,6 @@
                                 <div class="col-lg-8 col-md-7">
                                     <div class="d-flex align-items-center justify-content-around text-center flight-route">
                                         <div class="departure-info">
-                                            {{-- MENGGUNAKAN NOTASI OBJEK (->) DAN FORMAT CARBON --}}
                                             <div class="fs-5 fw-bold flight-time">{{ $ticket->departure_time->format('H:i') }}</div>
                                             <div class="small airport-code">{{ $ticket->departure_code }}</div>
                                             <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket->departure_city }}</div>
@@ -102,7 +101,6 @@
                                             <small class="text-primary fw-medium flight-transit d-block mt-1">{{ $ticket->transit_info }}</small>
                                         </div>
                                         <div class="arrival-info">
-                                            {{-- MENGGUNAKAN NOTASI OBJEK (->) DAN FORMAT CARBON --}}
                                             <div class="fs-5 fw-bold flight-time">{{ $ticket->arrival_time->format('H:i') }}</div>
                                             <div class="small airport-code">{{ $ticket->arrival_code }}</div>
                                             <div class="text-muted city-name" style="font-size: 0.75rem;">{{ $ticket->arrival_city }}</div>
