@@ -14,7 +14,7 @@ class RoomType extends Model
      *
      * @var string
      */
-    protected $table = 'room_types'; // Pastikan nama tabel di database adalah 'room_types'
+    protected $table = 'room_types';
 
     /**
      * The attributes that are mass assignable.
@@ -22,12 +22,12 @@ class RoomType extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'hotel_id',          // Kunci asing ke tabel hotel
-        'name_type',         // Nama tipe kamar (e.g., "Standard", "Deluxe")
-        'deskripsi',         // Deskripsi tipe kamar
-        'harga_per_malam',   // Harga per malam untuk tipe kamar ini
-        'kapasitas',         // Kapasitas orang untuk tipe kamar ini
-        'image',             // Gambar spesifik untuk tipe kamar ini
+        'hotel_id',
+        'name_type',
+        'deskripsi',
+        'harga_per_malam',
+        'kapasitas',
+        'image',
     ];
 
     /**
@@ -36,8 +36,8 @@ class RoomType extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'harga_per_malam' => 'decimal:2', // Mengatur 'harga_per_malam' sebagai decimal dengan 2 angka di belakang koma
-        'kapasitas' => 'integer',         // Memastikan 'kapasitas' di-cast sebagai integer
+        'harga_per_malam' => 'decimal:2',
+        'kapasitas' => 'integer',
     ];
 
     /**

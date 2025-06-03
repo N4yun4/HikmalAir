@@ -14,7 +14,7 @@ class Makanan extends Model
      *
      * @var string
      */
-    protected $table = 'makanan'; // Pastikan nama tabel di database adalah 'makanan'
+    protected $table = 'makanan';
 
     /**
      * The attributes that are mass assignable.
@@ -22,11 +22,11 @@ class Makanan extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',          // Sesuai dengan kolom 'name' di tabel
-        'deskripsi',     // Sesuai dengan kolom 'deskripsi' di tabel
-        'image',         // Sesuai dengan kolom 'image' di tabel
-        'price',         // Sesuai dengan kolom 'price' di tabel
-        'price_display', // Sesuai dengan kolom 'price_display' di tabel
+        'name',
+        'deskripsi',
+        'image',
+        'price',
+        'price_display',
     ];
 
     /**
@@ -35,7 +35,7 @@ class Makanan extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'price' => 'decimal:2', // Mengatur 'price' sebagai decimal dengan 2 angka di belakang koma
+        'price' => 'decimal:2',
     ];
 
     /**

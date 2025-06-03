@@ -15,7 +15,7 @@
                     <span class="input-group-text bg-white border-end-0" id="searchIcon">
                         <i class="bi bi-search"></i>
                     </span>
-                    <input class="form-control border-start-0" type="search" placeholder="Cari penerbangan" aria-label="Search" aria-describedby="searchIcon"> {{-- Placeholder bisa disesuaikan --}}
+                    <input class="form-control border-start-0" type="search" placeholder="Cari penerbangan" aria-label="Search" aria-describedby="searchIcon">
                 </div>
             </form>
 
@@ -52,7 +52,6 @@
     </div>
 </nav>
 
-{{-- Panel --}}
 <div class="container-fluid py-2 secondary-navbar-custom">
     <div class="container">
         <ul class="nav justify-content-center">

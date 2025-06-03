@@ -166,12 +166,10 @@
             noSelectionMessage.style.display = 'none';
             totalSection.style.display = 'block';
 
-            // Kosongkan ringkasan sebelum diisi ulang
             orderSummaryList.innerHTML = '';
 
             let totalPrice = 0;
 
-            // Buat elemen untuk setiap makanan yang dipilih
             Object.entries(selectedMeals).forEach(([mealId, quantity]) => {
                 const mealCard = document.querySelector(`.meal-card[data-id="${mealId}"]`);
                 const mealName = mealCard.querySelector('.meal-name').textContent;

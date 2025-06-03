@@ -14,7 +14,7 @@ class Hotel extends Model
      *
      * @var string
      */
-    protected $table = 'hotel'; // Pastikan nama tabel di database adalah 'hotel'
+    protected $table = 'hotel';
 
     /**
      * The attributes that are mass assignable.
@@ -22,11 +22,11 @@ class Hotel extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',        // Sesuai dengan kolom 'name' di tabel
-        'location',    // Sesuai dengan kolom 'location' di tabel
-        'image',       // Sesuai dengan kolom 'image' di tabel
-        'rating',      // Sesuai dengan kolom 'rating' di tabel
-        'descrption',  // Sesuai dengan kolom 'descrption' di tabel
+        'name',
+        'location',
+        'image',
+        'rating',
+        'descrption',
     ];
 
     /**
@@ -35,7 +35,7 @@ class Hotel extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'rating' => 'decimal:1', // Mengatur 'rating' sebagai decimal dengan 1 angka di belakang koma
+        'rating' => 'decimal:1',
     ];
 
     /**

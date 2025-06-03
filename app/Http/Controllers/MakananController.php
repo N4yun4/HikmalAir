@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class MakananController extends Controller
 {
-    // Tampilkan daftar makanan
     public function index(Request $request)
     {
         $booking_code = $request->query('booking_code');
@@ -19,11 +18,10 @@ class MakananController extends Controller
         }
 
         $daftarMakanan = Makanan::all();
-        // dd($daftarMakanan);
 
         return view('makanan', [
             'daftarMakanan' => $daftarMakanan,
-            'booking_code' => $booking_code // Kirim ini ke view
+            'booking_code' => $booking_code
         ]);
     }
 
@@ -32,10 +30,9 @@ class MakananController extends Controller
         $request->validate([
             'selectedMeals' => 'required|array',
             'selectedMeals.*' => 'integer|min:1',
-            'booking_code' => 'required|exists:bookings,booking_code' // Ubah ini
+            'booking_code' => 'required|exists:bookings,booking_code'
         ]);
 
-        // Simpan makanan yang dipilih ke booking
         $booking = Booking::where('booking_code', $request->booking_code)->first();
 
         if ($booking) {

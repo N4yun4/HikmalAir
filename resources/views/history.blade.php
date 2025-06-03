@@ -62,7 +62,6 @@
                                         Lihat Detail
                                     </a> --}}
 
-                                    {{-- === penglogikaan rating === --}}
                                     @if ($pesanan['tipe_pesanan'] == 'Tiket Pesawat' && $pesanan['status'] == 'Selesai')
                                         @if (isset($pesanan['sudah_rating']) && $pesanan['sudah_rating'] == true && isset($pesanan['rating_value']))
                                             <div class="rated-display mt-2">

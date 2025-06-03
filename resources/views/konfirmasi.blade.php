@@ -24,7 +24,6 @@
                         </a>
                     </div>
 
-                    {{-- detail tiket dan pemesan --}}
                     <div class="card info-card mb-4 shadow-sm">
                         <div class="card-header section-title-header">
                             <i class="bi bi-ticket-detailed-fill me-2"></i>Detail Tiket & Pemesan
@@ -46,7 +45,6 @@
                             <p class="mb-1"><strong>Email:</strong> {{ $bookerDetails['contact_email'] }}</p>
                             <p class="mb-0"><strong>Telepon:</strong> {{ $bookerDetails['contact_phone'] }}</p>
 
-                            {{-- Tampilkan Kursi yang Dipilih --}}
                             @if(!empty($selectedSeats))
                                 <hr>
                                     <h6 class="mb-2">Kursi Anda:</h6>
@@ -59,7 +57,6 @@
                         </div>
                     </div>
 
-                    {{-- asuransi--}}
                     <div class="card info-card mb-4 shadow-sm">
                         <div class="card-header section-title-header">
                             <i class="bi bi-shield-check me-2"></i>Lindungi Perjalanan Anda
@@ -77,7 +74,6 @@
                         </div>
                     </div>
 
-                    {{-- tambah bagasi --}}
                     <div class="card info-card mb-4 shadow-sm">
                         <div class="card-header section-title-header">
                             <i class="bi bi-briefcase-fill me-2"></i>Tambah Bagasi Ekstra
@@ -93,7 +89,6 @@
                         </div>
                     </div>
 
-                    {{-- food & drink --}}
                     <div class="card info-card mb-4 shadow-sm">
                         <div class="card-header section-title-header">
                             <i class="bi bi-cup-straw me-2"></i>Makanan & Minuman di Pesawat
@@ -135,7 +130,6 @@
                         </div>
                     </div>
 
-                    {{-- Merchandise --}}
                     <div class="card info-card mb-4 shadow-sm">
                         <div class="card-header section-title-header">
                             <i class="bi bi-bag-heart me-2"></i>Merchandise Eksklusif dari HikmalAir
@@ -161,7 +155,6 @@
                         </div>
                     </div>
 
-                    {{-- hotel --}}
                     <div class="card info-card mb-4 shadow-sm">
                         <div class="card-header section-title-header">
                             <i class="bi bi-building-check me-2"></i>Akomodasi Hotel
@@ -183,7 +176,6 @@
                         </div>
                     </div>
 
-                    {{-- penjemputan --}}
                     <div class="card info-card mb-4 shadow-sm">
                         <div class="card-header section-title-header">
                             <i class="bi bi-car-front-fill me-2"></i>Layanan Antar-Jemput Bandara
@@ -207,7 +199,6 @@
                         </div>
                     </div>
 
-                    {{-- rekapan pembayaran --}}
                     <div class="card info-card shadow-sm">
                         <div class="card-header section-title-header bg-primary text-white">
                             <i class="bi bi-receipt me-2"></i>Rincian Pembayaran
@@ -224,7 +215,6 @@
                                     <dd>IDR {{ number_format($totalMakanan, 0, ',', '.') }}</dd>
                                 </div>
                                 @endif
-                                <!-- Tambahkan bagian lain jika ada (asuransi, bagasi, dll) -->
                             </dl>
                             <hr>
                             <div class="d-flex justify-content-between align-items-center grand-total">

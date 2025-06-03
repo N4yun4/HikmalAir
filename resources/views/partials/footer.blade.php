@@ -23,7 +23,7 @@
                 </ul>
             </div>
 
-            <div class="col-lg-3 col-md-12 footer-social-col"> {{-- Kamu pakai col-lg-3 di sini, sebelumnya col-lg-4 --}}
+            <div class="col-lg-3 col-md-12 footer-social-col">
                 <h5 class="footer-title">Follow Sosial Media HikmalAir</h5>
                 <div class="social-icons mt-3">
                     <a href="#" class="text-white me-3"><i class="bi bi-facebook fs-2"></i></a>

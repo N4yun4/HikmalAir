@@ -14,7 +14,6 @@
     @include('partials.navbar')
 
     <div class="pilihtiket-main-content">
-        {{-- Panel Pencarian --}}
         <div class="search-panel">
             <form class="row g-3 align-items-end" method="GET" action="{{ route('pilihtiket') }}">
                 <div class="col-lg col-md-6">
@@ -52,9 +51,7 @@
             </form>
         </div>
 
-        {{-- pilihan tiket --}}
         <div class="ticket-results-container">
-            {{-- Informasi Pencarian --}}
             @if (!empty($searchParams['dari']) || !empty($searchParams['ke']) || !empty($searchParams['tanggal_berangkat']))
                 <div class="search-summary text-center mb-3 p-2 bg-light border rounded">
                     <p class="mb-0">
@@ -80,7 +77,6 @@
                 <button class="btn filter-btn" data-filter="malam">Jam Malam (18-00)</button>
             </div>
 
-            {{-- Area Daftar Tiket Pergi --}}
             <div id="ticketListContainer">
                 @if (isset($tickets) && count($tickets) > 0)
                     <h3 class="mt-4 mb-3">Tiket Pergi</h3>
@@ -124,7 +120,6 @@
                 @endif
             </div>
 
-            {{-- Area Daftar Tiket Pulang --}}
             @if (isset($returnTickets) && count($returnTickets) > 0)
                 <h3 class="mt-5 mb-3">Tiket Pulang</h3>
                 <div id="returnTicketListContainer">

@@ -35,11 +35,11 @@
                                 <img src="{{ asset('images/logoBiru.png') }}" alt="Logo Pesawat" class="airline-logo-img">
                             </div>
                             <div class="col">
-                                <h3 class="h5 mb-0 fw-bold">{{ $ticket->airline_name }} <small class="fw-normal">(HA-{{ $ticket->id }})</small></h3> {{-- HA-ID Tiket sebagai placeholder nomor penerbangan --}}
+                                <h3 class="h5 mb-0 fw-bold">{{ $ticket->airline_name }} <small class="fw-normal">(HA-{{ $ticket->id }})</small></h3>
                                 <span class="badge text-bg-info fw-normal">{{ $ticket->flight_class }}</span>
                             </div>
                             <div class="col-md-auto text-md-end mt-2 mt-md-0">
-                                <span class="text-muted">Tanggal:</span> <strong>{{ $ticket->date->translatedFormat('D, d M Y') }}</strong> {{-- Gunakan objek Carbon dari model --}}
+                                <span class="text-muted">Tanggal:</span> <strong>{{ $ticket->date->translatedFormat('D, d M Y') }}</strong>
                             </div>
                         </div>
 

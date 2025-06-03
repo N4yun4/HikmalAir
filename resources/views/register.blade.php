@@ -19,14 +19,12 @@
     <div class="form-section fade-in">
       <h2>Sign Up</h2>
 
-      {{-- Menampilkan pesan sukses dari session --}}
       @if (session('success'))
         <div style="color: green; margin-bottom: 10px;">
             {{ session('success') }}
         </div>
       @endif
 
-      {{-- Menampilkan pesan error validasi --}}
       @if ($errors->any())
         <div style="color:red; margin-bottom: 10px;">
             <ul>
@@ -37,7 +35,6 @@
         </div>
       @endif
 
-      {{-- PERHATIKAN BARIS INI: action form harus mengarah ke rute POST yang benar --}}
       <form action="{{ route('actionregister') }}" method="POST">
         @csrf
         <div class="row">
@@ -45,7 +42,6 @@
             <label for="first_name">Nama Depan</label>
             <input type="text" id="first_name" name="first_name" required
              value="{{ old('first_name') }}">
-            {{-- Menampilkan error spesifik untuk first_name --}}
             @error('first_name')
                 <div style="color:red; font-size:0.8em; margin-top: -8px; margin-bottom: 5px;">{{ $message }}</div>
             @enderror
@@ -95,7 +91,6 @@
           @enderror
         </div>
 
-        {{-- Kolom untuk konfirmasi password WAJIB ada karena validasi 'confirmed' --}}
         <div class="input-group">
           <label for="password_confirmation">Konfirmasi Password</label>
           <input type="password" id="password_confirmation" name="password_confirmation" required>
@@ -109,7 +104,6 @@
             <input type="checkbox" name="terms" required>
             dengan ini, anda menyetujui segala kebijakan dari maskapai kami
           </label>
-          {{-- Anda bisa tambahkan validasi untuk checkbox 'terms' di controller jika perlu --}}
           @error('terms')
               <div style="color:red; font-size:0.8em; margin-top: 5px;">{{ $message }}</div>
           @enderror

@@ -24,7 +24,6 @@ class BookingController extends Controller
      */
     public function processBooking(Request $request)
     {
-        // Validasi data dari form deskripsi tiket
         $validatedData = $request->validate([
             'ticket_id' => 'required|exists:flights,id',
             'contact_full_name' => 'required|string|max:255',
@@ -39,11 +38,9 @@ class BookingController extends Controller
             'contact_phone.required' => 'Nomor telepon wajib diisi.',
         ]);
 
-        // Ambil data makanan dan hotel dari session
         $selectedMakanan = session('selected_makanan', []);
         $selectedHotel = session('selected_hotel', []);
 
-        // Redirect ke halaman pemilihan kursi dengan data yang sudah divalidasi
         return redirect()->route('seat.selection', [
             'ticket_id' => $validatedData['ticket_id'],
             'contact_full_name' => $validatedData['contact_full_name'],
@@ -151,7 +148,6 @@ class BookingController extends Controller
             'booked_at' => now(),
         ]);
 
-        // Hapus data dari session setelah booking berhasil
         session()->forget(['selected_makanan', 'selected_hotel']);
 
         return redirect()->route('booking.confirmation', ['booking_code' => $booking->booking_code])
@@ -247,17 +243,14 @@ class BookingController extends Controller
         $flight = $booking->flight;
         $selectedSeats = $booking->seat;
 
-        // Ambil selected_meals dari booking
         $selectedMeals = $booking->selected_meals;
 
-        // Hitung total harga makanan
         $totalMakanan = 0;
         $selectedMealsDetails = null;
 
         if (!empty($selectedMeals) && is_array($selectedMeals)) {
             $selectedMealsDetails = Makanan::whereIn('id', $selectedMeals)->get();
 
-            // Hitung total harga makanan
             foreach ($selectedMealsDetails as $makanan) {
                 $totalMakanan += $makanan->price;
             }
@@ -278,7 +271,7 @@ class BookingController extends Controller
             'arrival_time' => $flight->arrival_time,
             'duration' => $flight->duration,
             'price_display' => $flight->price_display,
-            'price_int' => $flight->price_int, // Pastikan ini ada
+            'price_int' => $flight->price_int,
         ];
 
         $bookerDetails = [
@@ -308,7 +301,6 @@ class BookingController extends Controller
             }
         }
 
-        // Hitung total pembayaran
         $totalPembayaran = $selectedTicket['price_int'] + $totalMakanan;
 
         return view('konfirmasi', compact(
@@ -320,7 +312,7 @@ class BookingController extends Controller
             'selectedHotelDetails',
             'selectedSeats',
             'totalMakanan',
-            'totalPembayaran' // Kirim total pembayaran ke view
+            'totalPembayaran'
         ));
     }
 
@@ -353,7 +345,6 @@ class BookingController extends Controller
             return redirect()->back()->with('error', 'Booking tidak ditemukan!');
         }
 
-        // Set selected_meals menjadi array kosong
         $booking->selected_meals = [];
         $booking->save();
 
