@@ -1,14 +1,3 @@
-Created by :
-
-- Andy Hikmal Parakkasi 23051204002 
-- Faiz Muhammad Hakim 23051204020
-- Achmad Daffa Fachriansyah 23051204022  
-- Athalla Bayanaka Maheswara 23051204034 
-
-## Catatan Internal Tim
-Ini adalah catatan khusus untuk tim pengembang (Mahasiswa TI A Unesa).  
-Harap tidak membagikan isi repositori ini ke publik tanpa izin.
-
 ### Struktur Folder
 - `/app` : Folder aplikasi Laravel
 - `/public` : Folder yang diakses pengguna (hosting)
